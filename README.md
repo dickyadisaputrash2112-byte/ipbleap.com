@@ -1,30 +1,37 @@
 # IPB LEAP Management System
 
-Repositori awal untuk pengembangan **ipbleap.com**.
+Situs referensi desain untuk **ipbleap.com**, diterbitkan melalui GitHub Pages dari branch `main` (folder root).
 
-## Isi saat ini
+## Isi situs
 
-- `index.html`: salinan utuh file referensi “IPB Leap Management System.html” yang disediakan pemilik proyek. File berisi 19 layar desain dalam satu paket HTML.
-- `DOMAIN.md`: catatan penghubungan domain yang terdaftar di DomaiNesia.
+`index.html` adalah salinan utuh file “IPB Leap Management System.html” yang disediakan pemilik proyek, berisi 19 layar desain. File sumber dipertahankan tanpa perubahan.
 
-## Status
+Situs ini merupakan referensi/prototipe. Autentikasi OTP, penyimpanan data bersama, hak akses, integrasi Drive, chat, notifikasi, dan transaksi belum dibangun sebagai layanan operasional. Jangan memasukkan data peserta atau kredensial ke prototipe.
 
-Bahan desain sudah tersedia. Ini belum merupakan aplikasi operasional: autentikasi OTP, penyimpanan data, hak akses per peran, integrasi Drive, chat, notifikasi, dan transaksi belum diverifikasi atau dibangun sebagai layanan bersama. Tampilan/form pada referensi tidak membuktikan fitur tersebut bekerja.
+## Hosting dan domain
 
-File desain disimpan apa adanya sebagai referensi. Menaruhnya di GitHub tidak otomatis membuat domain aktif.
+- Domain: `ipbleap.com`.
+- Registrar dan DNS: DomaiNesia.
+- Hosting: GitHub Pages.
+- Sumber publikasi: branch `main`, `/ (root)`.
+- `CNAME` menetapkan domain utama.
+- `.nojekyll` membuat HTML disajikan langsung.
+- Setiap perubahan pada branch `main` memicu publikasi ulang melalui Pages.
+- Rincian record dan verifikasi ada di [DOMAIN.md](DOMAIN.md).
 
-## Melihat referensi
+Repositori dibuka ke publik atas persetujuan pemilik pada 16 Oktober 2026.
 
-Buka `index.html` menggunakan browser modern. File menampilkan kumpulan layar desain; ukurannya sekitar 13 MB dan memerlukan JavaScript. Jangan memasukkan data peserta atau kredensial ke referensi ini.
+## Verifikasi berkas
+
+HTML di server telah dibandingkan byte demi byte dengan sumber asli dan cocok.
+
+- Ukuran: 13.657.920 byte.
+- SHA-256: `8bc1570a822c9bfb723b851e39d82c0fdd6b1d5e40ecf84b93ddde4f7ec52315`.
 
 ## Pengembangan berikutnya
 
-1. Konfirmasi prioritas modul dan aturan peran dari kurikulum program yang disahkan.
-2. Bangun aplikasi, autentikasi, basis data, serta kontrol akses berdasarkan prioritas tersebut.
-3. Uji dengan data contoh dan akun per peran.
-4. Tentukan layanan hosting dan hubungkan repositori.
-5. Hubungkan `ipbleap.com` melalui DNS DomaiNesia setelah tujuan hosting pasti, lalu periksa HTTPS.
+1. Tetapkan prioritas modul dan aturan peran berdasarkan kurikulum yang disahkan.
+2. Bangun aplikasi, autentikasi, basis data, dan kontrol akses.
+3. Uji dengan data contoh dan akun per peran sebelum digunakan peserta.
 
-## Kerahasiaan
-
-Jangan commit token, password, `.env`, data peserta, atau dokumen pribadi. Tidak ada lisensi distribusi publik yang diberikan melalui repositori ini.
+Jangan commit token, password, `.env`, data peserta, atau dokumen pribadi. Tidak ada lisensi distribusi ulang yang diberikan melalui repositori ini.
