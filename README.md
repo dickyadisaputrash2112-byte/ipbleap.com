@@ -1,37 +1,19 @@
-# IPB LEAP Management System
+# IPB LEAP Workspace
 
-Situs referensi desain untuk **ipbleap.com**, diterbitkan melalui GitHub Pages dari branch `main` (folder root).
+Frontend pratinjau IPB LEAP untuk ipbleap.com, berdasarkan 19 layar desain HTML yang disediakan pemilik. Galeri ekspor telah diubah menjadi halaman web tersendiri dengan navigasi yang terhubung.
 
-## Isi situs
+Halaman awal menampilkan branding asli IPB LEAP, tab Masuk/Daftar, dan akses pratinjau enam peran. Tampilan program mempertahankan isi dan gaya desain sumber. Raport mentee dipisahkan dari formulir penilaian Asisten Mentor. Menu ponsel dan penanda data contoh tersedia di workspace.
 
-`index.html` adalah salinan utuh file “IPB Leap Management System.html” yang disediakan pemilik proyek, berisi 19 layar desain. File sumber dipertahankan tanpa perubahan.
+## Batas penggunaan
 
-Situs ini merupakan referensi/prototipe. Autentikasi OTP, penyimpanan data bersama, hak akses, integrasi Drive, chat, notifikasi, dan transaksi belum dibangun sebagai layanan operasional. Jangan memasukkan data peserta atau kredensial ke prototipe.
+Ini frontend pratinjau dengan data contoh. Akun, pendaftaran, basis data bersama, kontrol akses, chat antar pengguna, notifikasi, dan integrasi Drive belum terhubung ke layanan operasional. Form masuk sengaja belum aktif. Pilihan peran disimpan untuk pratinjau navigasi saja dan bukan autentikasi atau hak akses.
 
-## Hosting dan domain
+## Hosting
 
-- Domain: `ipbleap.com`.
-- Registrar dan DNS: DomaiNesia.
-- Hosting: GitHub Pages.
-- Sumber publikasi: branch `main`, `/ (root)`.
-- `CNAME` menetapkan domain utama.
-- `.nojekyll` membuat HTML disajikan langsung.
-- Setiap perubahan pada branch `main` memicu publikasi ulang melalui Pages.
-- Rincian record dan verifikasi ada di [DOMAIN.md](DOMAIN.md).
+GitHub Pages, branch `main`, root `/`. `CNAME` menetapkan `ipbleap.com`; `.nojekyll` menyajikan berkas statis secara langsung. DNS dikelola di DomaiNesia. Rincian konfigurasi dan catatan HTTPS ada di DOMAIN.md.
 
-Repositori dibuka ke publik atas persetujuan pemilik pada 16 Oktober 2026.
+## Pengujian
 
-## Verifikasi berkas
+Halaman awal, tab Daftar, pilihan peran, tautan raport, menu ponsel, serta halaman utama program telah diperiksa melalui browser lokal pada layar desktop dan ponsel. Aset React, runtime desain, font, dan logo disajikan lokal.
 
-HTML di server telah dibandingkan byte demi byte dengan sumber asli dan cocok.
-
-- Ukuran: 13.657.920 byte.
-- SHA-256: `8bc1570a822c9bfb723b851e39d82c0fdd6b1d5e40ecf84b93ddde4f7ec52315`.
-
-## Pengembangan berikutnya
-
-1. Tetapkan prioritas modul dan aturan peran berdasarkan kurikulum yang disahkan.
-2. Bangun aplikasi, autentikasi, basis data, dan kontrol akses.
-3. Uji dengan data contoh dan akun per peran sebelum digunakan peserta.
-
-Jangan commit token, password, `.env`, data peserta, atau dokumen pribadi. Tidak ada lisensi distribusi ulang yang diberikan melalui repositori ini.
+Sumber galeri asli tersimpan pada riwayat Git sebelum konversi. Jangan menyimpan kredensial atau data peserta dalam repositori publik ini. Tidak ada lisensi distribusi ulang yang diberikan melalui repositori ini.
