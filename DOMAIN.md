@@ -1,38 +1,36 @@
 # Domain ipbleap.com
 
-- Registrar yang dikonfirmasi pemilik: **DomaiNesia**.
-- Domain tujuan: **ipbleap.com**.
-- Repositori: **dickyadisaputrash2112-byte/ipbleap.com**.
-- Hosting: belum dipilih/dihubungkan.
-- DNS: belum diubah dalam penyiapan repositori ini.
+Pengaturan di bawah diterapkan pada 16 Oktober 2026 dengan persetujuan pemilik.
 
-## Urutan penghubungan
+## Hosting
 
-1. Hubungkan repositori ke layanan hosting yang dipilih.
-2. Tambahkan domain `ipbleap.com` pada pengaturan hosting tersebut.
-3. Salin persis record DNS yang diberikan layanan hosting.
-4. Di MyDomaiNesia, buka domain `ipbleap.com` dan DNS Management/Zone Manager.
-5. Tambahkan/ubah hanya record yang diperlukan. Pertahankan MX, TXT verifikasi, serta record layanan lain.
-6. Tunggu verifikasi DNS dan penerbitan sertifikat, lalu uji domain utama, `www`, dan HTTPS.
+- Repositori: `dickyadisaputrash2112-byte/ipbleap.com` (publik).
+- Hosting: GitHub Pages, branch `main`, folder root.
+- Custom domain: `ipbleap.com`.
+- Nameserver: `ns1.domainesia.net` dan `ns2.domainesia.net`.
+- DNS dikelola melalui DomaiNesia.
 
-Jangan mengarahkan domain sebelum tujuan hosting siap. GitHub menyimpan sumber proyek; situs membutuhkan layanan hosting, misalnya GitHub Pages untuk situs statis atau layanan yang mendukung aplikasi dan autentikasi sesuai kebutuhan.
+## Record website
 
-## Jika nanti memilih GitHub Pages
+| Tipe | Nama | Nilai | TTL |
+| --- | --- | --- | --- |
+| A | @ | 185.199.108.153 | 300 |
+| A | @ | 185.199.109.153 | 300 |
+| A | @ | 185.199.110.153 | 300 |
+| A | @ | 185.199.111.153 | 300 |
+| CNAME | www | dickyadisaputrash2112-byte.github.io | 300 |
 
-Pastikan paket dan visibilitas repositori mendukung Pages. Situs Pages dapat diakses publik meskipun sumbernya privat; jangan menayangkan bahan/data internal tanpa meninjau isinya.
+A record bawaan `172.104.187.4` telah diganti. Record MX, mail, dan ftp bawaan tidak diubah.
 
-GitHub meminta domain ditambahkan pada Settings → Pages terlebih dahulu. Untuk apex domain, dokumentasi GitHub saat ini mencantumkan empat A record berikut:
+## Verifikasi
 
-| Tipe | Nama | Nilai |
-| --- | --- | --- |
-| A | @ | 185.199.108.153 |
-| A | @ | 185.199.109.153 |
-| A | @ | 185.199.110.153 |
-| A | @ | 185.199.111.153 |
-| CNAME | www | dickyadisaputrash2112-byte.github.io |
+- Dua nameserver DomaiNesia mengembalikan empat alamat GitHub Pages yang benar.
+- Resolver publik Cloudflare dan Google mengembalikan record yang benar.
+- GitHub Pages menyatakan **DNS check successful**.
+- Deployment Pages berhasil.
+- HTTP domain utama mengembalikan 200 dari GitHub dan HTML cocok dengan sumber asli.
 
-Periksa kembali petunjuk resmi saat aktivasi. Record ini hanya digunakan bila GitHub Pages benar-benar menjadi hosting, bukan otomatis untuk Vercel, Cloudflare, atau hosting DomaiNesia.
+- Tampilan halaman berhasil dibuka di Safari.
+- HTTPS: sertifikat otomatis GitHub masih dalam proses penerbitan pada pemeriksaan 16 Oktober 2026, 20.29 WIB.
 
-Rujukan:
-- https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site
-- https://www.domainesia.com/panduan/cara-setting-dns-dengan-mudah/
+Jika browser masih menampilkan halaman lama, tunggu cache DNS diperbarui; nameserver dan resolver publik sudah menunjuk GitHub Pages. Jangan mengubah record kembali ke alamat bawaan.
