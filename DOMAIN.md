@@ -28,7 +28,7 @@ A record bawaan `172.104.187.4` telah diganti. Record MX, mail, dan ftp bawaan t
 - Resolver publik Cloudflare dan Google mengembalikan record yang benar.
 - GitHub Pages sempat menyatakan **DNS check successful**. Pada pemeriksaan ulang masih muncul **NotServedByPagesError**, meskipun seluruh nameserver dan resolver publik yang diuji mengembalikan record yang benar.
 - Deployment Pages berhasil.
-- HTTP domain utama mengembalikan 200 dari GitHub dan HTML cocok dengan sumber asli.
+- HTTP domain utama mengembalikan 200 dari GitHub. Versi galeri asli telah diganti dengan frontend workspace; HTML publik cocok dengan versi lokal yang diuji.
 
 - Tampilan halaman berhasil dibuka di Safari.
 - HTTPS: sertifikat otomatis GitHub masih belum tersedia pada pemeriksaan 16 Oktober 2026, 20.43 WIB. Pengaturan custom domain sudah dilepas lalu dipasang kembali atas persetujuan pemilik untuk memulai ulang proses, sesuai panduan GitHub.
@@ -46,3 +46,12 @@ Jika browser masih menampilkan halaman lama, tunggu cache DNS diperbarui; namese
 - Enforce HTTPS belum bisa diaktifkan sampai sertifikat selesai diterbitkan. Jangan menganggap HTTPS sudah aktif sebelum diuji kembali.
 
 Panduan pemulihan sertifikat resmi: https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https#troubleshooting-certificate-provisioning-certificate-not-yet-created-error
+
+## Pemeriksaan lanjutan — 17 Oktober 2026, 11.12 WIB
+
+- Frontend hasil konversi galeri telah diterbitkan lewat commit `1ea78ce0e29f6d85c7be61d8b263632dab18fd22`; workflow Pages berhasil.
+- Halaman masuk/daftar, pilihan peran, dashboard mentee, dan raport pribadi berhasil dibuka lewat HTTP di domain publik.
+- Halaman utama, navbar, raport, monitoring, beranda pengurus, stylesheet, React DOM, dan logo publik mengembalikan 200 dan cocok dengan berkas lokal.
+- Cache router yang sebelumnya mengembalikan alamat lama sudah berakhir: resolver jaringan, Cloudflare, Google, dan sistem sekarang mengembalikan empat alamat GitHub Pages.
+- DNS aman Chrome telah dipilih ke Cloudflare atas persetujuan pemilik.
+- HTTPS untuk domain utama dan www masih gagal validasi nama sertifikat. Masalah ini terpisah dari publikasi frontend; jangan menyatakan HTTPS selesai sampai sertifikat valid dan Enforce HTTPS aktif.
