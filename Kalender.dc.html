@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-uat2">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-mobile3">
 <title>Kalender · IPB Leap Management System</title>
 <script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
 <script src="assets/site.js?v=20261017-uat1" defer></script></head>
@@ -242,7 +242,7 @@ input:focus,select:focus{outline:none;border-color:#3157A5 !important}
     <dc-import name="Navbar" role="mentee" active="kalender" hint-size="100%,73px"></dc-import>
   </div>
 
-  <main style="max-width: 1360px; margin: 0 auto; padding: 24px 24px 64px; display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
+  <main class="calendar-layout" style="max-width: 1360px; margin: 0 auto; padding: 24px 24px 64px; display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start">
 
     <aside style="flex: 1 1 240px; max-width: 280px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
       <button class="btn" type="button" sc-camel-on-click="{{openCreate}}" style="height: 52px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 16px 30px -18px rgba(50,48,111,.9)">+ Buat event</button>
@@ -265,13 +265,13 @@ input:focus,select:focus{outline:none;border-color:#3157A5 !important}
 
     <section class="rise" style="flex: 999 1 640px; min-width: 0; padding: 22px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45)">
       <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px">
-        <div style="display: flex; align-items: center; gap: 10px">
+        <div class="calendar-month-tools" style="display: flex; align-items: center; gap: 10px">
           <h1 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px; letter-spacing: -.02em; color: #32306F">Oktober 2026</h1>
           <button type="button" aria-label="Bulan sebelumnya" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">‹</button>
           <button type="button" aria-label="Bulan berikutnya" style="width: 36px; height: 36px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font-weight: 800">›</button>
           <button type="button" style="height: 36px; padding: 0 12px; border-radius: 11px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; font: inherit; font-weight: 700; font-size: 13px">Hari ini</button>
         </div>
-        <div style="display: flex; gap: 8px; align-items: center">
+        <div class="calendar-view-tools" style="display: flex; gap: 8px; align-items: center">
           <label style="position: relative"><span style="position: absolute; left: -9999px">Cari event</span><input type="search" placeholder="Cari event, orang, lokasi" style="height: 38px; width: 220px; padding: 0 12px; border-radius: 12px; border: 1px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 13px"></label>
           <div role="tablist" aria-label="Tampilan" style="display: flex; gap: 3px; padding: 4px; border-radius: 12px; background: #E9EDF7">
             <sc-for list="{{views}}" as="v" hint-placeholder-count="4">
@@ -301,7 +301,7 @@ input:focus,select:focus{outline:none;border-color:#3157A5 !important}
       <sc-if value="{{isAgenda}}" hint-placeholder-val="{{ false }}">
         <div style="display: flex; flex-direction: column; gap: 8px">
           <sc-for list="{{agenda}}" as="e" hint-placeholder-count="8">
-            <button class="ev" type="button" sc-camel-on-click="{{e.open}}" style="display: flex; align-items: center; gap: 16px; padding: 14px 16px; border-radius: 18px; border: 1px solid #EDF0F7; background: #FFFFFF; font: inherit; cursor: pointer; text-align: left; color: #0D0D1A">
+            <button class="ev calendar-agenda-event" type="button" sc-camel-on-click="{{e.open}}" style="display: flex; align-items: center; gap: 16px; padding: 14px 16px; border-radius: 18px; border: 1px solid #EDF0F7; background: #FFFFFF; font: inherit; cursor: pointer; text-align: left; color: #0D0D1A">
               <span style="width: 54px; flex: none; font-weight: 800; color: #32306F; font-size: 14px">{{e.dateLabel}}</span>
               <span style="width: 10px; height: 10px; border-radius: 50%; background: {{e.color}}; flex: none"></span>
               <span style="flex: 1"><strong style="font-size: 14.5px">{{e.title}}</strong><span style="display: block; font-size: 12.5px; color: #6B6D8C">{{e.time}} · {{e.where}}</span></span>
@@ -385,7 +385,7 @@ input:focus,select:focus{outline:none;border-color:#3157A5 !important}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { hidden: {}, view: 'bulan', sel: 'e7', create: false, rsvp: { e7: 'ya' }, added: false };
+    this.state = { hidden: {}, view: window.matchMedia('(max-width:760px)').matches ? 'agenda' : 'bulan', sel: 'e7', create: false, rsvp: { e7: 'ya' }, added: false };
   }
   renderVals() {
     const st = this.state;
@@ -469,7 +469,7 @@ class Component extends DCLogic {
       showCreate: st.create,
       openCreate: () => this.setState({ create: true }),
       closeCreate: () => this.setState({ create: false }),
-      saveCreate: () => this.setState({ create: false, added: true, sel: 'e13', view: 'bulan' })
+      saveCreate: () => this.setState({ create: false, added: true, sel: 'e13', view: window.matchMedia('(max-width:760px)').matches ? 'agenda' : 'bulan' })
     };
   }
 }

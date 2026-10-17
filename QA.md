@@ -45,3 +45,10 @@ Tanggal: 17 Oktober 2026. Lingkup: frontend pratinjau dengan data contoh. Penguj
 - Audit log server, transaksi keuangan operasional, pencadangan, dan pemulihan sistem.
 
 Hasil saat ini: frontend dapat dipakai untuk meninjau desain dan mencoba alur dengan data contoh. Penggunaan oleh peserta masih memerlukan sistem akun, basis data, integrasi, dan uji lanjutan dengan akun nyata per peran.
+
+
+## Pemeriksaan mobile tambahan
+
+19 halaman diperiksa pada lebar viewport 360, 390, dan 430 piksel (57 kombinasi). Setelah perbaikan, tidak ada halaman yang melebar melebihi viewport. Pemeriksaan ini menggunakan simulasi ukuran browser, bukan perangkat fisik.
+
+Kontrol kalender, pencarian file, dan impor event dapat membungkus ke baris berikutnya. Kalender HP membuka Agenda lebih dulu, menempatkan jadwal di atas filter kalender, dan menampilkan nama kalender di baris terpisah. Tombol tampilan kalender dan file manager diperbesar. Menu HP dan tombol List file manager berhasil dicoba. Animasi yang sempat membuat kartu melebar di layar kecil dinonaktifkan pada tampilan HP.
