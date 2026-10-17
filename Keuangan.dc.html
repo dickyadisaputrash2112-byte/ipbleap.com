@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-uat2">
 <title>Keuangan · IPB Leap Management System</title>
-<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js"></script>
-<script src="assets/site.js" defer></script></head>
+<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
+<script src="assets/site.js?v=20261017-uat1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -380,20 +380,20 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
           <button type="button" role="radio" aria-checked="{{inChecked}}" sc-camel-on-click="{{setIn}}" style="{{inStyle}}">+ Pemasukan</button>
         </div>
         <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Nominal
-          <span style="display: flex; align-items: center; border-radius: 16px; border: 1.5px solid #D5DAEA; padding: 0 14px"><span style="font-size: 22px; font-weight: 800; color: #6B6D8C">Rp</span><input type="text" inputmode="numeric" value="{{amountText}}" sc-camel-on-change="{{onAmount}}" aria-label="Nominal rupiah" style="flex: 1; height: 60px; border: 0; padding: 0 10px; font: inherit; font-size: 28px; font-weight: 800; color: #0D0D1A; background: transparent; outline: none"></span>
+          <span style="display: flex; align-items: center; border-radius: 16px; border: 1.5px solid #D5DAEA; padding: 0 14px"><span style="font-size: 22px; font-weight: 800; color: #6B6D8C">Rp</span><input type="text" inputmode="numeric" value="{{amountText}}" sc-camel-on-change="{{onAmount}}" data-required="Nominal transaksi" aria-label="Nominal rupiah" style="flex: 1; height: 60px; border: 0; padding: 0 10px; font: inherit; font-size: 28px; font-weight: 800; color: #0D0D1A; background: transparent; outline: none"></span>
         </label>
         <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px">
-          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Tanggal<input type="date" value="2026-10-13" style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
-          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Akun kas<sc-raw-select sc-camel-on-change="{{onAcct}}" style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Rekening Program</option><option>Kas Tunai</option></sc-raw-select></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Tanggal<input type="date" data-required="Tanggal transaksi" value="{{txDate}}" sc-camel-on-change="{{onTxDate}}" sc-camel-on-input="{{onTxDate}}" style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Akun kas<sc-raw-select value="{{acct}}" sc-camel-on-change="{{onAcct}}" style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Rekening Program</option><option>Kas Tunai</option></sc-raw-select></label>
           <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Kategori
-            <sc-if value="{{isOut}}" hint-placeholder-val="{{ true }}"><sc-raw-select sc-camel-on-change="{{onCat}}" style="width: 100%; height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Konsumsi</option><option>Transportasi</option><option>Venue</option><option>Produksi</option><option>Lainnya</option></sc-raw-select></sc-if>
-            <sc-if value="{{isIn}}" hint-placeholder-val="{{ false }}"><sc-raw-select sc-camel-on-change="{{onCat}}" style="width: 100%; height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Sponsor</option><option>Hibah</option><option>Iuran</option><option>Lainnya</option></sc-raw-select></sc-if>
+            <sc-if value="{{isOut}}" hint-placeholder-val="{{ true }}"><sc-raw-select value="{{cat}}" sc-camel-on-change="{{onCat}}" style="width: 100%; height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Konsumsi</option><option>Transportasi</option><option>Venue</option><option>Produksi</option><option>Lainnya</option></sc-raw-select></sc-if>
+            <sc-if value="{{isIn}}" hint-placeholder-val="{{ false }}"><sc-raw-select value="{{cat}}" sc-camel-on-change="{{onCat}}" style="width: 100%; height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Sponsor</option><option>Hibah</option><option>Iuran</option><option>Lainnya</option></sc-raw-select></sc-if>
           </label>
-          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Proker<sc-raw-select sc-camel-on-change="{{onProker}}" style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Leadership Camp</option><option>Kelas bulanan</option><option>Merchandise</option><option>Community Gathering</option><option>Umum</option></sc-raw-select></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Proker<sc-raw-select value="{{proker}}" sc-camel-on-change="{{onProker}}" style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Leadership Camp</option><option>Kelas bulanan</option><option>Merchandise</option><option>Community Gathering</option><option>Umum</option></sc-raw-select></label>
         </div>
-        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; margin-top: 12px">Keterangan<input type="text" value="{{desc}}" sc-camel-on-change="{{onDesc}}" style="height: 46px; padding: 0 12px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; margin-top: 12px">Keterangan<input type="text" data-required="Keterangan transaksi" value="{{desc}}" sc-camel-on-change="{{onDesc}}" style="height: 46px; padding: 0 12px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
         <label style="display: flex; align-items: center; gap: 12px; margin-top: 12px; padding: 14px; border-radius: 16px; border: 2px dashed #A3B4DA; background: #F8F9FD; cursor: pointer; font-size: 13.5px; font-weight: 700">Bukti (foto nota / transfer)<input type="file" accept="image/*,.pdf" sc-camel-on-change="{{onProof}}" style="font: inherit; font-size: 12.5px; color: #6B6D8C"></label>
-        <button class="btn" type="button" sc-camel-on-click="{{saveTx}}" style="width: 100%; margin-top: 18px; height: 54px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Simpan transaksi</button>
+        <button class="btn" type="button" data-validate="transaction" sc-camel-on-click="{{saveTx}}" style="width: 100%; margin-top: 18px; height: 54px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Simpan transaksi</button>
       </div>
     </div>
   </sc-if>
@@ -403,7 +403,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { filter: 'all', txOpen: false, kind: 'out', amount: 450000, acct: 'Kas Tunai', cat: 'Konsumsi', proker: 'Leadership Camp', desc: 'Snack rapat panitia', proof: 'nota.jpg', newTx: [], reading: false, readingName: '', parsed: false };
+    this.state = { filter: 'all', txOpen: false, kind: 'out', txDate: '2026-10-13', amount: 450000, acct: 'Kas Tunai', cat: 'Konsumsi', proker: 'Leadership Camp', desc: 'Snack rapat panitia', proof: 'nota.jpg', newTx: [], reading: false, readingName: '', parsed: false };
   }
   componentWillUnmount() { clearTimeout(this._t); }
   startRead(name) {
@@ -465,6 +465,7 @@ class Component extends DCLogic {
       outStyle: st.kind === 'out' ? segOn + '#B42318' : segOff, inStyle: st.kind === 'in' ? segOn + '#166534' : segOff,
       outChecked: st.kind === 'out' ? 'true' : 'false', inChecked: st.kind === 'in' ? 'true' : 'false',
       setOut: () => this.setState({ kind: 'out', cat: 'Konsumsi' }), setIn: () => this.setState({ kind: 'in', cat: 'Sponsor' }),
+      acct: st.acct, cat: st.cat, proker: st.proker, txDate: st.txDate, onTxDate: (e) => this.setState({txDate:e.target.value}),
       amountText: st.amount ? st.amount.toLocaleString('id-ID') : '',
       onAmount: (e) => this.setState({ amount: Number(String(e.target.value).replace(/[^0-9]/g, '')) || 0 }),
       onAcct: (e) => this.setState({ acct: e.target.value }),
@@ -474,8 +475,9 @@ class Component extends DCLogic {
       onDesc: (e) => this.setState({ desc: e.target.value }),
       onProof: (e) => { const fl = e.target.files && e.target.files[0]; if (fl) this.setState({ proof: fl.name }); },
       saveTx: () => {
+        if(!st.amount || !st.desc.trim() || !st.txDate) return;
         const n = (st.kind === 'out' ? -1 : 1) * st.amount;
-        this.setState({ txOpen: false, filter: 'all', newTx: [['13 Okt', st.desc || 'Transaksi baru', st.cat + ' · ' + st.proker, st.acct, st.proof, n, true]].concat(st.newTx.map((t) => t.slice(0, 6))) });
+        this.setState({ txOpen: false, filter: 'all', newTx: [[new Date(st.txDate+'T12:00:00').toLocaleDateString('id-ID',{day:'numeric',month:'short'}), st.desc, st.cat + ' · ' + st.proker, st.acct, st.proof, n, true]].concat(st.newTx.map((t) => t.slice(0, 6))) });
       }
     };
   }

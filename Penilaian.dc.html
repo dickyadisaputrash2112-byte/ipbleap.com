@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-uat2">
 <title>Penilaian 360° · IPB Leap Management System</title>
-<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js"></script>
-<script src="assets/site.js" defer></script></head>
+<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
+<script src="assets/site.js?v=20261017-uat1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -279,7 +279,7 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
         <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 22px">
           <div>
             <h2 style="margin: 0; font-size: 24px; font-weight: 800; color: #32306F">{{selForm}} · {{selName}}</h2>
-            <p style="margin: 4px 0 0; font-size: 13.5px; color: #6B6D8C">Rubric Raport Mentee v2 · 6 indikator · total bobot 100% · tersimpan otomatis</p>
+            <p style="margin: 4px 0 0; font-size: 13.5px; color: #6B6D8C">Rubric Raport Mentee v2 · 6 indikator · total bobot 100% · simulasi pada halaman ini</p>
           </div>
           <sc-if value="{{locked}}" hint-placeholder-val="{{ false }}">
             <span style="font-size: 13px; font-weight: 800; padding: 8px 12px; border-radius: 12px; background: #DCFCE7; color: #166534">Terkirim · terkunci</span>
@@ -323,7 +323,7 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
           </sc-for>
 
           <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 700">Komentar untuk {{selFirst}} <span style="font-weight: 500; color: #6B6D8C; font-size: 12.5px">Wajib, minimal 20 karakter. Ditampilkan di raport.</span>
-            <textarea rows="3" placeholder="Apa yang sudah bagus, dan satu hal yang perlu dilatih bulan depan." style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px">Inisiatifnya kuat saat memimpin diskusi proposal. Bulan depan latih ringkas saat presentasi.</textarea>
+            <textarea rows="3" data-required="Komentar penilaian" data-minlength="20" value="{{comment}}" sc-camel-on-change="{{onComment}}" disabled="{{locked}}" placeholder="Apa yang sudah bagus, dan satu hal yang perlu dilatih bulan depan." style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
           </label>
         </div>
       </section>
@@ -344,8 +344,8 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
         <div style="border-radius: 24px; padding: 22px; background: #FFFFFF; border: 1px solid #E3E7F2">
           <span style="font-size: 13px; font-weight: 800; color: #32306F">Nilai bulanan {{selFirst}}</span>
           <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 14px; font-size: 14px">
-            <div style="display: flex; justify-content: space-between"><span style="color: #55577A">Skor Mentor × 50%</span><strong>{{mentorText}}</strong></div>
-            <div style="display: flex; justify-content: space-between"><span style="color: #55577A">Skor kamu (Asmen) × 50%</span><strong>{{scoreText}}</strong></div>
+            <div style="display: flex; justify-content: space-between"><span style="color: #55577A">Skor {{otherRole}} × 50%</span><strong>{{mentorText}}</strong></div>
+            <div style="display: flex; justify-content: space-between"><span style="color: #55577A">Skor kamu ({{viewerRole}}) × 50%</span><strong>{{scoreText}}</strong></div>
             <div style="height: 1px; background: #E3E7F2"></div>
             <div style="display: flex; justify-content: space-between; align-items: center"><span style="font-weight: 700">Nilai bulanan</span><span style="font-size: 22px; font-weight: 800; color: #32306F">{{monthlyText}}</span></div>
             <sc-if value="{{mentorMissing}}" hint-placeholder-val="{{ false }}">
@@ -356,14 +356,14 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
 
         <sc-if value="{{notLocked}}" hint-placeholder-val="{{ true }}">
           <div style="display: flex; flex-direction: column; gap: 10px">
-            <button class="btn" type="button" sc-camel-on-click="{{submit}}" style="height: 54px; border: 0; border-radius: 18px; background: #0D0D1A; color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 16px 30px -18px rgba(13,13,26,.9)">Kirim penilaian</button>
+            <button class="btn" type="button" data-validate="assessment" sc-camel-on-click="{{submit}}" style="height: 54px; border: 0; border-radius: 18px; background: #0D0D1A; color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: 0 16px 30px -18px rgba(13,13,26,.9)">Kirim penilaian</button>
             <span style="font-size: 12.5px; color: #6B6D8C; text-align: center">Setelah dikirim, form terkunci. Pembukaan ulang lewat pengurus.</span>
           </div>
         </sc-if>
         <sc-if value="{{justSent}}" hint-placeholder-val="{{ false }}">
           <div style="display: flex; align-items: center; gap: 14px; padding: 16px; border-radius: 22px; background: #EEFFB8">
             <span class="hop" aria-hidden="true" style="width: 48px; height: 48px; flex: none; border-radius: 16px; background: #D4FF3A; border: 2px solid #0D0D1A; display: flex; align-items: center; justify-content: center"><svg width="22" height="22" sc-camel-view-box="0 0 24 24" fill="none" stroke="#0D0D1A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5M9 5h10v10"></path></svg></span>
-            <span style="font-size: 14px; line-height: 1.45; color: #2B3600"><strong style="display: block; color: #0D0D1A">Leap! Terkirim.</strong>Lanjut ke form berikutnya.</span>
+            <span style="font-size: 14px; line-height: 1.45; color: #2B3600"><strong style="display: block; color: #0D0D1A">Simulasi penilaian selesai.</strong>Lanjut ke form berikutnya.</span>
           </div>
         </sc-if>
       </aside>
@@ -385,17 +385,18 @@ class Component extends DCLogic {
         m4: { k1: 5, k2: 4, c1: 4, c2: 5, h1: 100, h2: 95 },
         d1: { k1: 5, k2: 5, c1: 4, c2: 5, h1: 100, h2: 90 }
       },
-      justSent: false
+      comments: {m1: 'Inisiatifnya kuat saat memimpin diskusi proposal. Bulan depan latih ringkas saat presentasi.'}, justSent: false
     };
   }
   renderVals() {
     const st = this.state;
+    const isMentor = sessionStorage.getItem('ipb-leap-preview-role') === 'mentor';
     const peopleDefs = [
       { id: 'm1', name: 'Nabila Putri', initials: 'NP', form: 'Raport Mentee', bg: 'linear-gradient(135deg,#3157A5,#A3D6E6)', ink: '#FFFFFF', mentor: 88.0 },
       { id: 'm2', name: 'Fajar Akbar', initials: 'FA', form: 'Raport Mentee', bg: '#A3D6E6', ink: '#1F5566', mentor: 79.5 },
       { id: 'm3', name: 'Gita Wulandari', initials: 'GW', form: 'Raport Mentee', bg: '#D4FF3A', ink: '#0D0D1A', mentor: null },
       { id: 'm4', name: 'Yusuf Saputra', initials: 'YS', form: 'Raport Mentee', bg: '#32306F', ink: '#FFFFFF', mentor: 91.2 },
-      { id: 'd1', name: 'Dian Hapsari', initials: 'DH', form: 'Raport Mentor', bg: 'linear-gradient(135deg,#0D0D1A,#32306F)', ink: '#FFFFFF', mentor: null }
+      { id: 'd1', name: isMentor ? 'Raka Pratama' : 'Dian Hapsari', initials: isMentor ? 'RP' : 'DH', form: isMentor ? 'Raport Asmen' : 'Raport Mentor', bg: 'linear-gradient(135deg,#0D0D1A,#32306F)', ink: '#FFFFFF', mentor: null }
     ];
     const stColor = { Belum: ['#FEE2E2', '#991B1B'], Draft: ['#FEF3C7', '#92400E'], Terkirim: ['#DCFCE7', '#166534'] };
     const people = peopleDefs.map((p) => {
@@ -474,6 +475,9 @@ class Component extends DCLogic {
     const mentorScore = cur.mentor;
     const monthly = isMentorForm ? null : (mentorScore == null ? total : (mentorScore * 0.5 + total * 0.5));
     return {
+      comment: st.comments[st.sel] || '',
+      onComment: (e) => this.setState({comments: Object.assign({}, st.comments, {[st.sel]: e.target.value})}),
+      viewerRole: isMentor ? 'Mentor' : 'Asmen', otherRole: isMentor ? 'Asmen' : 'Mentor',
       people: people,
       aspects: aspects,
       selName: cur.name,
@@ -489,7 +493,7 @@ class Component extends DCLogic {
       notLocked: !locked,
       justSent: st.justSent && locked,
       sentCount: Object.keys(st.status).filter((k) => st.status[k] === 'Terkirim').length,
-      submit: () => { const s = Object.assign({}, st.status); s[st.sel] = 'Terkirim'; this.setState({ status: s, justSent: true }); }
+      submit: () => { if ((st.comments[st.sel] || '').trim().length < 20) return; const s = Object.assign({}, st.status); s[st.sel] = 'Terkirim'; this.setState({ status: s, justSent: true }); }
     };
   }
 }

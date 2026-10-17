@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-uat2">
 <title>Chat · IPB Leap Management System</title>
-<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js"></script>
-<script src="assets/site.js" defer></script></head>
+<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
+<script src="assets/site.js?v=20261017-uat1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -373,8 +373,8 @@ input:focus{outline:none;border-color:#3157A5 !important}
             </div>
           </sc-if>
           <button type="button" aria-label="Lampirkan file" style="width: 42px; height: 42px; border-radius: 13px; border: 1px solid #E3E7F2; background: #FFFFFF; cursor: pointer; color: #55577A; font-size: 18px; font-weight: 700">+</button>
-          <input type="text" aria-label="Tulis pesan" value="{{draft}}" sc-camel-on-change="{{onDraft}}" placeholder="Tulis pesan, ketik @ untuk tag orang atau kerjaan" style="flex: 1; height: 46px; padding: 0 16px; border-radius: 15px; border: 1.5px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 14px">
-          <button class="btn" type="button" sc-camel-on-click="{{send}}" aria-label="Kirim" style="width: 46px; height: 46px; border-radius: 15px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center">
+          <input type="text" aria-label="Tulis pesan" sc-camel-on-key-down="{{onDraftKey}}" value="{{draft}}" sc-camel-on-change="{{onDraft}}" placeholder="Tulis pesan, ketik @ untuk tag orang atau kerjaan" style="flex: 1; height: 46px; padding: 0 16px; border-radius: 15px; border: 1.5px solid #E3E7F2; background: #F5F7FC; font: inherit; font-size: 14px">
+          <button class="btn" type="button" sc-camel-on-click="{{send}}" aria-label="Kirim" disabled="{{emptyDraft}}" style="width: 46px; height: 46px; border-radius: 15px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; cursor: pointer; display: flex; align-items: center; justify-content: center">
             <svg aria-hidden="true" width="18" height="18" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
           </button>
         </div>
@@ -478,6 +478,19 @@ class Component extends DCLogic {
       });
     } catch (e) {}
   }
+  sendMessage() {
+    const st = this.state;
+    const now = new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute: '2-digit'});
+        const t = st.draft.trim(); if (!t) return;
+        this.setState({ msgs: st.msgs.concat([{ id: Date.now(), from: 'me', type: 'text', text: t, time: now }]), draft: '', typing: true });
+        clearTimeout(this._t1); clearTimeout(this._t2);
+        this._t1 = setTimeout(() => {
+          const reply = '@Nabila Putri mantap! Jangan lupa cek @Task: Hitung margin petani ya.';
+          this.setState({ typing: false, banner: 'Jangan lupa cek task margin petani ya.', msgs: this.state.msgs.concat([{ id: Date.now(), from: 'raka', type: 'text', text: reply, time: now }]) });
+          this.chime();
+          this._t2 = setTimeout(() => this.setState({ banner: null }), 3200);
+        }, 1600);
+        }
   renderVals() {
     const st = this.state;
     const people = [
@@ -570,17 +583,9 @@ class Component extends DCLogic {
       hasPeople: suggPeople.length > 0, hasWork: suggWork.length > 0,
       suggPeople: suggPeople, suggWork: suggWork,
       typing: st.typing,
-      send: () => {
-        const t = st.draft.trim() || 'Noted kak, makasih!';
-        this.setState({ msgs: st.msgs.concat([{ id: Date.now(), from: 'me', type: 'text', text: t, time: now }]), draft: '', typing: true });
-        clearTimeout(this._t1); clearTimeout(this._t2);
-        this._t1 = setTimeout(() => {
-          const reply = '@Nabila Putri mantap! Jangan lupa cek @Task: Hitung margin petani ya.';
-          this.setState({ typing: false, banner: 'Jangan lupa cek task margin petani ya.', msgs: this.state.msgs.concat([{ id: Date.now(), from: 'raka', type: 'text', text: reply, time: now }]) });
-          this.chime();
-          this._t2 = setTimeout(() => this.setState({ banner: null }), 3200);
-        }, 1600);
-      },
+      emptyDraft: !st.draft.trim(),
+      send: () => this.sendMessage(),
+      onDraftKey: (e) => {if(e.key === 'Enter' && !e.shiftKey) {e.preventDefault();this.sendMessage();}},
       banner: !!st.banner, bannerText: st.banner || '',
       soundOn: st.sound, soundOff: !st.sound,
       soundPressed: st.sound ? 'true' : 'false',

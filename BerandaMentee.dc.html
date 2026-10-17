@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-uat2">
 <title>Beranda Mentee · IPB Leap Management System</title>
-<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js"></script>
-<script src="assets/site.js" defer></script></head>
+<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
+<script src="assets/site.js?v=20261017-uat1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -307,18 +307,18 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
             </div>
             <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
               <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 700">Capaian bulan ini
-                <textarea rows="4" placeholder="Contoh: menyelesaikan draft proposal final project" style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
+                <textarea rows="4" data-required="Capaian bulan ini" placeholder="Contoh: menyelesaikan draft proposal final project" style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
               </label>
               <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 700">Kendala
-                <textarea rows="4" placeholder="Apa yang menghambat?" style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
+                <textarea rows="4" data-required="Kendala" placeholder="Apa yang menghambat?" style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
               </label>
               <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 700">Rencana bulan depan
-                <textarea rows="4" placeholder="Langkah berikutnya" style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
+                <textarea rows="4" data-required="Rencana bulan depan" placeholder="Langkah berikutnya" style="resize: vertical; padding: 14px; border-radius: 16px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14px"></textarea>
               </label>
             </div>
             <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-top: 18px">
               <button type="button" style="height: 44px; padding: 0 16px; border-radius: 14px; border: 1.5px dashed #A3B4DA; background: transparent; font: inherit; font-weight: 700; font-size: 14px; color: #3157A5; cursor: pointer">+ Lampiran (foto, file, tautan)</button>
-              <button class="btn" type="button" sc-camel-on-click="{{sendUpdate}}" style="height: 50px; padding: 0 26px; border: 0; border-radius: 16px; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Kirim update</button>
+              <button class="btn" type="button" data-validate="progress" sc-camel-on-click="{{sendUpdate}}" style="height: 50px; padding: 0 26px; border: 0; border-radius: 16px; background: linear-gradient(135deg, #32306F, #3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Kirim update</button>
             </div>
           </div>
         </sc-if>
@@ -327,7 +327,7 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
             <div class="hop" aria-hidden="true" style="width: 72px; height: 72px; flex: none; border-radius: 24px; background: #D4FF3A; display: flex; align-items: center; justify-content: center">
               <svg width="34" height="34" sc-camel-view-box="0 0 24 24" fill="none" stroke="#0D0D1A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5M9 5h10v10"></path></svg>
             </div>
-            <div style="flex: 1"><h2 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 30px; color: #32306F">Leap! Update terkirim.</h2><p style="margin: 6px 0 0; font-size: 15px; color: #55577A">Asmen Raka bakal kasih tanggapan. Statusmu tetap Hijau.</p></div>
+            <div style="flex: 1"><h2 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 30px; color: #32306F">Simulasi update selesai.</h2><p style="margin: 6px 0 0; font-size: 15px; color: #55577A">Status contoh diperbarui di halaman ini. Data belum dikirim ke mentor atau disimpan permanen.</p></div>
             <button type="button" sc-camel-on-click="{{closeUpdate}}" style="height: 44px; padding: 0 18px; border-radius: 14px; border: 1px solid #E3E7F2; background: #FFFFFF; font: inherit; font-weight: 700; cursor: pointer">Tutup</button>
           </div>
         </sc-if>
@@ -438,7 +438,7 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { update: false, sent: false, done: { t1: true } };
+    this.state = { update: new URLSearchParams(location.search).get('update') === '1', sent: false, done: { t1: true } };
   }
   renderVals() {
     const defs = [

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-uat2">
 <title>Pengaturan · IPB Leap Management System</title>
-<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js"></script>
-<script src="assets/site.js" defer></script></head>
+<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
+<script src="assets/site.js?v=20261017-uat1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -280,8 +280,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
             <h2 style="{{s.h2}}">Profil &amp; data pribadi</h2>
             <p style="{{s.sub}}">Diisi sekali, dipakai di ID card, pendaftaran event, raport, dan sertifikat.</p>
             <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 20px">
-              <label style="{{s.label}}">Nama lengkap<input type="text" value="{{person.name}}" style="{{s.input}}"></label>
-              <label style="{{s.label}}">Nama panggilan<input type="text" value="{{person.nick}}" style="{{s.input}}"></label>
+              <label style="{{s.label}}">Nama lengkap<input type="text" sc-camel-default-value="{{person.name}}" style="{{s.input}}"></label>
+              <label style="{{s.label}}">Nama panggilan<input type="text" sc-camel-default-value="{{person.nick}}" style="{{s.input}}"></label>
               <label style="{{s.label}}">Email <span style="font-size: 11.5px; font-weight: 800; color: #16A34A">✓ terverifikasi OTP</span><input type="email" value="{{person.email}}" disabled="" style="{{s.inputOff}}"></label>
               <label style="{{s.label}}">Nomor WhatsApp<input type="tel" value="0812 3456 7890" style="{{s.input}}"></label>
               <sc-if value="{{isStudent}}" hint-placeholder-val="{{ true }}">
@@ -500,7 +500,7 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = {
-      tab: 'profil', role: 'mentee', theme: 'light', flipped: false, photo: null, toast: null,
+      tab: 'profil', role: sessionStorage.getItem('ipb-leap-preview-role') || 'mentee', theme: 'light', flipped: false, photo: null, toast: null,
       sw: { motion: false, contrast: false, sound: true, digest: true, dnd: false, otp: true, pub: true, pubEvent: true, pubProject: true, pubScore: false },
       notif: { chat: [1, 0, 1], undangan: [1, 1, 1], penilaian: [1, 1, 1], update: [1, 1, 0], pengumuman: [1, 1, 1], task: [1, 0, 1] },
       sound: 'leap'
@@ -584,12 +584,16 @@ class Component extends DCLogic {
       mentor: { name: 'Dian Hapsari', nick: 'Dian', email: 'dian.hapsari@gmail.com' },
       pengurus: { name: 'Head of Operations', nick: 'Ops', email: 'operations@ipbleap.id' }
     };
+    people.bendahara = {name: 'Bendahara', nick: 'Bendahara', email: 'bendahara@example.com'};
+    people.superadmin = {name: 'Super Admin', nick: 'Admin', email: 'admin@example.com'};
     const cards = {
       mentee: { label: 'Mentee', accent: '#A3D6E6', ink: '#0D0D1A', group: 'Kelompok Rajawali', id: 'IPBL-26-0142' },
       asmen: { label: 'Asmen', accent: '#3157A5', ink: '#FFFFFF', group: 'Associate Mentor · Rajawali', id: 'IPBL-26-A031' },
       mentor: { label: 'Mentor', accent: '#32306F', ink: '#FFFFFF', group: 'Mentor · Rajawali', id: 'IPBL-26-M031' },
       pengurus: { label: 'Pengurus', accent: '#D4FF3A', ink: '#0D0D1A', group: 'Steering Team IPB Leap 2026', id: 'IPBL-26-P004' }
     };
+    cards.bendahara = Object.assign({}, cards.pengurus, {label:'Bendahara',id:'CONTOH-BD'});
+    cards.superadmin = Object.assign({}, cards.pengurus, {label:'Super Admin',id:'CONTOH-SA'});
     const roleTabs = Object.keys(cards).map((k) => ({
       label: cards[k].label, pressed: st.role === k ? 'true' : 'false',
       style: 'height: 32px; padding: 0 12px; border-radius: 10px; border: 0; font: inherit; font-size: 12.5px; cursor: pointer; ' + (st.role === k ? 'background: ' + t.card + '; color: ' + t.ink + '; font-weight: 800' : 'background: transparent; color: ' + t.muted + '; font-weight: 700'),
@@ -652,7 +656,7 @@ class Component extends DCLogic {
       otpSw: sw(st.sw.otp, flipSw('otp'), 'OTP'),
       onSound: (e) => { this.setState({ sound: e.target.value }); this.beep(e.target.value); },
       testSound: () => this.beep(st.sound),
-      save: () => this.showToast('Profil tersimpan'),
+      save: () => this.showToast('Simulasi perubahan profil. Belum disimpan permanen.'),
       toast: !!st.toast, toastText: st.toast || ''
     };
   }

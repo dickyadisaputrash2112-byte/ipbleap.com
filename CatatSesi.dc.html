@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-uat2">
 <title>Catat Sesi Mentoring · IPB Leap Management System</title>
-<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js"></script>
-<script src="assets/site.js" defer></script></head>
+<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
+<script src="assets/site.js?v=20261017-uat1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -254,15 +254,15 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
               <button type="button" sc-camel-on-click="{{setOne}}" aria-pressed="{{onePressed}}" style="{{oneStyle}}"><strong style="display: block; font-size: 15px">1-on-1</strong><span style="font-size: 12.5px; opacity: .8">Satu mentee</span></button>
             </div>
             <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
-              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Sesi ke<input type="text" value="#6" style="height: 46px; padding: 0 12px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
-              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Tanggal<input type="date" value="2026-10-18" style="height: 46px; padding: 0 12px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Sesi ke<input type="text" data-required="Sesi ke" value="#6" style="height: 46px; padding: 0 12px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+              <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Tanggal<input type="date" data-required="Tanggal sesi" value="2026-10-18" style="height: 46px; padding: 0 12px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
               <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Durasi<sc-raw-select style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>2 jam</option><option>1 jam</option><option>1,5 jam</option></sc-raw-select></label>
             </div>
             <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px">
               <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Tema kurikulum<sc-raw-select style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Oktober · Komunikasi &amp; Influence</option><option>September · Problem framing</option></sc-raw-select></label>
               <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Format<sc-raw-select style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Online · Google Meet</option><option>Offline</option><option>Hybrid</option></sc-raw-select></label>
             </div>
-            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; margin-top: 12px">Topik sesi<input type="text" value="Negosiasi dengan stakeholder desa" style="height: 46px; padding: 0 12px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; margin-top: 12px">Topik sesi<input type="text" data-required="Topik sesi" value="Negosiasi dengan stakeholder desa" style="height: 46px; padding: 0 12px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
             <p style="margin: 12px 0 0; font-size: 12.5px; color: #3157A5; font-weight: 700">Terhubung ke event kalender "Sesi Mentoring #6 · Sab 18 Okt 09.00"</p>
           </div>
 
@@ -286,7 +286,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
 
           <div style="padding: 26px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
             <h2 style="margin: 0 0 14px; font-size: 18px; font-weight: 800">3 · Ringkasan &amp; tindak lanjut</h2>
-            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Ringkasan diskusi<textarea rows="4" style="resize: vertical; padding: 12px 14px; border-radius: 14px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; line-height: 1.5">Simulasi negosiasi dengan kepala desa. Tiap mentee latihan 5 menit, Mentor Dian memberi feedback. Kesimpulan: siapkan data margin petani sebelum pertemuan desa.</textarea></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Ringkasan diskusi<textarea data-required="Ringkasan diskusi" rows="4" style="resize: vertical; padding: 12px 14px; border-radius: 14px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; line-height: 1.5">Simulasi negosiasi dengan kepala desa. Tiap mentee latihan 5 menit, Mentor Dian memberi feedback. Kesimpulan: siapkan data margin petani sebelum pertemuan desa.</textarea></label>
             <span style="display: block; font-size: 13px; font-weight: 700; margin: 16px 0 8px">Tindak lanjut (otomatis jadi task untuk yang ditunjuk)</span>
             <div style="display: flex; flex-direction: column; gap: 8px">
               <sc-for list="{{actions}}" as="a" hint-placeholder-count="2">
@@ -322,7 +322,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
             <p style="margin: 14px 0 0; font-size: 12.5px; line-height: 1.5; color: rgba(255,255,255,.8)">Kehadiran masuk ke status monitoring dan komponen "Kehadiran sesi" di raport.</p>
           </div>
           <label style="display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; font-weight: 600; padding: 0 4px"><input type="checkbox" checked="" style="margin-top: 3px"> Kirim ringkasan ke grup chat Rajawali</label>
-          <button class="btn" type="button" sc-camel-on-click="{{save}}" style="height: 54px; border-radius: 18px; border: 0; background: #0D0D1A; color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Simpan sesi</button>
+          <button class="btn" type="button" data-validate="session" sc-camel-on-click="{{save}}" style="height: 54px; border-radius: 18px; border: 0; background: #0D0D1A; color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer">Simpan sesi</button>
           <button type="button" style="height: 44px; border-radius: 14px; border: 1px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 700; font-size: 14px; cursor: pointer">Simpan sebagai draft</button>
         </aside>
       </div>
@@ -331,8 +331,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
     <sc-if value="{{saved}}" hint-placeholder-val="{{ false }}">
       <div class="rise" style="max-width: 560px; margin: 40px auto; text-align: center; padding: 40px; border-radius: 32px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
         <div class="hop" aria-hidden="true" style="width: 84px; height: 84px; margin: 0 auto 18px; border-radius: 28px; background: #D4FF3A; display: flex; align-items: center; justify-content: center; transform: rotate(-6deg)"><svg width="38" height="38" sc-camel-view-box="0 0 24 24" fill="none" stroke="#0D0D1A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19 19 5M9 5h10v10"></path></svg></div>
-        <h2 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px; color: #32306F">Sesi #6 tercatat!</h2>
-        <p style="margin: 10px 0 24px; font-size: 15px; line-height: 1.6; color: #55577A">{{presentCount}} hadir, {{actionCount}} task tindak lanjut terkirim ke yang ditunjuk, dan ringkasan diposting ke grup Rajawali.</p>
+        <h2 style="margin: 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 34px; color: #32306F">Simulasi sesi selesai.</h2>
+        <p style="margin: 10px 0 24px; font-size: 15px; line-height: 1.6; color: #55577A">Contoh kehadiran {{presentCount}} peserta dan {{actionCount}} tindak lanjut berhasil diuji. Data belum dikirim ke grup atau disimpan permanen.</p>
         <div style="display: flex; gap: 10px; justify-content: center"><a href="MonitoringProgres.dc.html" style="height: 48px; padding: 0 18px; border-radius: 14px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font-weight: 800; text-decoration: none; display: flex; align-items: center">Lihat monitoring</a><button type="button" sc-camel-on-click="{{reset}}" style="height: 48px; padding: 0 18px; border-radius: 14px; border: 1px solid #D5DAEA; background: #FFFFFF; font: inherit; font-weight: 700; cursor: pointer">Catat sesi lain</button></div>
       </div>
     </sc-if>

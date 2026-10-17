@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-uat2">
 <title>Buat Pengumuman · IPB Leap Management System</title>
-<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js"></script>
-<script src="assets/site.js" defer></script></head>
+<script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
+<script src="assets/site.js?v=20261017-uat1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -274,10 +274,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
           <p style="margin: 10px 0 0; font-size: 13px; font-weight: 700; color: #3157A5">Perkiraan penerima: {{total}} orang</p>
         </div>
 
-        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 800">Judul<input type="text" value="{{title}}" sc-camel-on-change="{{onTitle}}" style="height: 50px; padding: 0 14px; border-radius: 14px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 16px; font-weight: 700"></label>
+        <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 800">Judul<input type="text" data-required="Judul pengumuman" value="{{title}}" sc-camel-on-change="{{onTitle}}" style="height: 50px; padding: 0 14px; border-radius: 14px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 16px; font-weight: 700"></label>
         <label style="display: flex; flex-direction: column; gap: 8px; font-size: 14px; font-weight: 800">Isi pengumuman
           <span style="display: flex; gap: 4px; padding: 6px; border-radius: 12px 12px 0 0; border: 1.5px solid #D5DAEA; border-bottom: 0; background: #F8F9FD"><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900">B</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-style: italic; font-weight: 700">I</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700">•</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #3157A5">@</span><span style="width: 30px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="15" height="15" sc-camel-view-box="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></span></span>
-          <textarea rows="6" value="{{body}}" sc-camel-on-change="{{onBody}}" style="margin-top: -8px; resize: vertical; padding: 14px; border-radius: 0 0 14px 14px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14.5px; line-height: 1.55"></textarea>
+          <textarea rows="6" data-required="Isi pengumuman" value="{{body}}" sc-camel-on-change="{{onBody}}" style="margin-top: -8px; resize: vertical; padding: 14px; border-radius: 0 0 14px 14px; border: 1.5px solid #D5DAEA; font: inherit; font-weight: 500; font-size: 14.5px; line-height: 1.55"></textarea>
         </label>
 
         <div style="display: flex; flex-wrap: wrap; gap: 8px">
@@ -299,7 +299,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
               <button type="button" sc-camel-on-click="{{later}}" aria-pressed="{{laterPressed}}" style="{{laterStyle}}">Jadwalkan</button>
             </div>
             <sc-if value="{{isLater}}" hint-placeholder-val="{{ false }}">
-              <input type="datetime-local" value="2026-10-15T07:00" aria-label="Jadwal kirim" style="margin-top: 8px; width: 100%; box-sizing: border-box; height: 42px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 13.5px">
+              <input type="datetime-local" value="{{scheduled}}" sc-camel-on-change="{{onScheduled}}" sc-camel-on-input="{{onScheduled}}" aria-label="Jadwal kirim" style="margin-top: 8px; width: 100%; box-sizing: border-box; height: 42px; padding: 0 10px; border-radius: 12px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 13.5px">
             </sc-if>
           </div>
           <div>
@@ -327,10 +327,10 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#3157A5 !impor
           </div>
         </div>
         <sc-if value="{{notSent}}" hint-placeholder-val="{{ true }}">
-          <button class="btn" type="button" sc-camel-on-click="{{send}}" style="height: 54px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25)">{{sendLabel}}</button>
+          <button class="btn" type="button" data-validate="announcement" sc-camel-on-click="{{send}}" style="height: 54px; border-radius: 18px; border: 0; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; font: inherit; font-weight: 800; font-size: 15px; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255,255,255,.25)">{{sendLabel}}</button>
         </sc-if>
         <sc-if value="{{sent}}" hint-placeholder-val="{{ false }}">
-          <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 20px; background: #EEFFB8; font-size: 14px"><span style="width: 40px; height: 40px; border-radius: 14px; background: #D4FF3A; border: 2px solid #0D0D1A; display: flex; align-items: center; justify-content: center; font-weight: 900">✓</span><span><strong style="display: block">Terkirim ke {{total}} orang</strong>Statistik baca muncul di riwayat.</span></div>
+          <div style="display: flex; align-items: center; gap: 12px; padding: 16px; border-radius: 20px; background: #EEFFB8; font-size: 14px"><span style="width: 40px; height: 40px; border-radius: 14px; background: #D4FF3A; border: 2px solid #0D0D1A; display: flex; align-items: center; justify-content: center; font-weight: 900">✓</span><span><strong style="display: block">Simulasi untuk {{total}} penerima</strong>Contoh riwayat diperbarui. Belum ada pesan atau notifikasi yang dikirim.</span></div>
         </sc-if>
       </aside>
     </div>
@@ -356,7 +356,7 @@ class Component extends DCLogic {
   constructor(props) {
     super(props);
     this.state = {
-      sel: { mentee: true, asmen: true }, specifics: ['d:Divisi Branding & Creative'], when: 'now', sent: false,
+      sel: { mentee: true, asmen: true }, specifics: ['d:Divisi Branding & Creative'], when: 'now', scheduled: new Date(Date.now()+86400000-new Date().getTimezoneOffset()*60000).toISOString().slice(0,16), sent: false,
       title: 'Pendaftaran Leadership Camp dibuka!',
       body: 'Halo semuanya! Pendaftaran Leadership Camp 2026 dibuka sampai 2 Nov. Daftar 1 klik di menu Event, kuota 120 orang.'
     };
@@ -395,9 +395,10 @@ class Component extends DCLogic {
       { title: 'Rapat Steering Team 18 Okt', to: 'Pengurus', when: '11 Okt · 20.10', pct: 100 },
       { title: 'Template RAB terbaru v3', to: 'Pengurus', when: '9 Okt · 15.30', pct: 76 }
     ];
-    if (st.sent) history.unshift({ title: st.title, to: toParts.join(', '), when: st.when === 'now' ? 'Baru saja' : 'Terjadwal 15 Okt · 07.00', pct: st.when === 'now' ? 4 : 0 });
+    if (st.sent) history.unshift({ title: st.title, to: toParts.join(', '), when: st.when === 'now' ? 'Baru saja' : 'Simulasi terjadwal '+new Date(st.scheduled).toLocaleString('id-ID'), pct: st.when === 'now' ? 4 : 0 });
     return {
       roles: roles, specifics: specifics, total: total, toLabel: toParts.join(', ') || 'belum dipilih',
+      scheduled: st.scheduled, onScheduled: (e) => this.setState({scheduled:e.target.value}),
       title: st.title, body: st.body,
       onTitle: (e) => this.setState({ title: e.target.value }),
       onBody: (e) => this.setState({ body: e.target.value }),
