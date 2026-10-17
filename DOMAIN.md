@@ -55,3 +55,14 @@ Panduan pemulihan sertifikat resmi: https://docs.github.com/en/pages/getting-sta
 - Cache router yang sebelumnya mengembalikan alamat lama sudah berakhir: resolver jaringan, Cloudflare, Google, dan sistem sekarang mengembalikan empat alamat GitHub Pages.
 - DNS aman Chrome telah dipilih ke Cloudflare atas persetujuan pemilik.
 - HTTPS untuk domain utama dan www masih gagal validasi nama sertifikat. Masalah ini terpisah dari publikasi frontend; jangan menyatakan HTTPS selesai sampai sertifikat valid dan Enforce HTTPS aktif.
+
+## HTTPS selesai — 17 Oktober 2026, 11.19 WIB
+
+- GitHub Pages menyatakan **DNS check successful** dan **Certificate Active (3 of 3)**.
+- **Enforce HTTPS** sudah aktif.
+- `https://ipbleap.com/` merespons 200 dan isinya cocok dengan frontend yang diuji.
+- HTTP domain utama serta HTTP/HTTPS www semuanya mengalihkan ke `https://ipbleap.com/`.
+- Raport mentee dan stylesheet berhasil diakses lewat HTTPS.
+- Situs berhasil dibuka di Chrome profil Dicky. Panel informasi situs Chrome menyatakan **Koneksi aman** tanpa melewati peringatan keamanan.
+
+Catatan kendala HTTPS pada bagian sebelumnya adalah riwayat pemeriksaan; kendala tersebut sudah selesai pada verifikasi ini. Autentikasi akun dan layanan data aplikasi tetap belum diaktifkan, sesuai batas frontend pratinjau pada README.
