@@ -323,17 +323,17 @@ class Component extends DCLogic {
       logo: 'assets/709dab4ed621b444.png'
     } : {
       bar: 'rgba(255,255,255,.78)', ink: '#0D0D1A', muted: '#6B6D8C', brand: '#32306F', line: '#F0F2F8', line2: '#E3E7F2', chip: '#FFFFFF', field: '#F5F7FC', pop: '#FFFFFF', icon: '#32306F', ring: '#FFFFFF', link: '#3157A5', navInk: '#33355A', navOnBg: '#32306F', navOnInk: '#FFFFFF',
-      logo: 'assets/709dab4ed621b444.png'
+      logo: 'assets/82fd7880f89bd1ce.png'
     };
     const kel = [
       { label: 'Ringkasan kelompok', desc: 'Anggota, status lampu, update terbaru', href: 'Monitoring.dc.html', short: 'KL', tint: '#E3F3F8' },
       { label: 'Monitoring progres', desc: 'Riwayat update & kehadiran per bulan', href: 'MonitoringProgres.dc.html', short: 'MO', tint: '#E4EBF8' },
       { label: 'Catat sesi mentoring', desc: 'Kehadiran, topik, tindak lanjut', href: 'CatatSesi.dc.html', short: 'CS', tint: '#E7E6F3' },
-      { label: 'Penilaian 360°', desc: 'Form bulanan & raport kelompok', href: 'Penilaian.dc.html', short: 'PN', tint: '#EEFFB8' }
+      { label: 'Penilaian & bukti', desc: 'Check-in, Review KPI & kepemimpinan', href: 'Penilaian.dc.html', short: 'PN', tint: '#EEFFB8' }
     ];
     const programP = { key: 'program', label: 'Program', children: [
       { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'MonitoringProgres.dc.html', short: 'MO', tint: '#E4EBF8' },
-      { label: 'Penilaian & rubric', desc: 'Indikator, bobot, periode', href: 'Penilaian.dc.html', short: 'PN', tint: '#EEFFB8' },
+      { label: 'Penilaian & bukti', desc: 'Hasil, bukti & Review mentee', href: 'Penilaian.dc.html', short: 'PN', tint: '#EEFFB8' },
       { label: 'Kelola event', desc: 'Buat event & pendaftaran', href: 'KelolaEvent.dc.html', short: 'EV', tint: '#E3F3F8' },
       { label: 'Pengumuman', desc: 'Kirim ke role, kelompok, orang', href: 'Pengumuman.dc.html', short: 'PG', tint: '#E7E6F3' }
     ] };
@@ -352,7 +352,7 @@ class Component extends DCLogic {
         { key: 'beranda', label: 'Beranda', href: 'BerandaMentee.dc.html' },
         { key: 'program', label: 'Program', children: [
           { label: 'Progres & Project', desc: 'Update bulanan dan final project', href: 'BerandaMentee.dc.html', short: 'PR', tint: '#E3F3F8' },
-          { label: 'Raport', desc: 'Nilai bulanan dan feedback 360°', href: 'Raport.dc.html', short: 'RP', tint: '#EEFFB8' }
+          { label: 'Raport', desc: 'Skor Review, bukti & perkembangan', href: 'Raport.dc.html', short: 'RP', tint: '#EEFFB8' }
         ] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'BerandaMentee.dc.html' }]),
       asmen: [

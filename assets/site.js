@@ -16,7 +16,7 @@
   function modal(title){const d=document.createElement('dialog');d.className='workspace-dialog';d.setAttribute('aria-label',title);const head=document.createElement('div');head.className='workspace-dialog-head';const h=document.createElement('h2');h.textContent=title;const close=document.createElement('button');close.type='button';close.textContent='Tutup';close.onclick=()=>d.close();head.append(h,close);const body=document.createElement('div');body.className='workspace-dialog-body';d.append(head,body);d.addEventListener('click',e=>{if(e.target===d)d.close()});document.body.append(d);return{dialog:d,body}}
   function links(container,entries){container.replaceChildren();for(const [label,href] of entries){const a=document.createElement('a');a.href=href;a.textContent=label;container.append(a)}}
   const common=[['Kalender','Kalender.dc.html'],['Upcoming event','Event.dc.html'],['Chat','Chat.dc.html'],['Pengaturan','Settings.dc.html']];
-  const entries=[...(menus[role]||menus.mentee),...common];
+  const entries=[['Penilaian & bukti','Penilaian.dc.html'],...(menus[role]||menus.mentee),...common];
   const nav=modal('Navigasi workspace');links(nav.body,entries);status.querySelector('button').onclick=()=>nav.dialog.showModal();
   const add=modal('Tambah cepat');links(add.body,quick[role]||quick.mentee);
   const search=modal('Cari di workspace');const field=document.createElement('input');field.type='search';field.placeholder='Cari halaman, progres, event…';field.setAttribute('aria-label','Cari halaman');const results=document.createElement('div');results.className='workspace-search-results';search.body.append(field,results);

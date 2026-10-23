@@ -1,0 +1,59 @@
+
+> ipb-leap-penilaian@0.1.0 test
+> node --test test/*.test.ts
+
+✔ contoh wajib: 19 + 16 + 16 + 16 = 67, Perlu dukungan (1.638625ms)
+✔ Februari tidak memakai P3; bulatkan komponen lalu normalisasi (0.762042ms)
+✔ Agustus memakai Mei, bukan nilai November yang juga dikirim (0.12675ms)
+✔ Agustus tanpa hasil Mei ditahan, bukan memakai nol (0.273041ms)
+✔ November menolak nilai Mei sebagai nilai akhir (0.125292ms)
+✔ tanpa tautan: Achieving otomatis Not Achieved (0.192542ms)
+✔ Achieving dengan bukti Mutu ditolak (0.10675ms)
+✔ Exceeding dengan bukti Mutu ditolak (0.066375ms)
+✔ Outcome yang belum diverifikasi tidak membuka Achieving (0.098375ms)
+✔ P4 memilih bukti terkuat per KPI, tidak menjumlahkan tautan (0.158791ms)
+✔ P4 mengabaikan tag yang menunggu verifikasi dan memberi peringatan (0.189541ms)
+✔ tautan javascript ditolak (0.078708ms)
+✔ tidak ada check-in adalah belum lengkap (0.070917ms)
+✔ POC tidak boleh 0 atau 4 KPI (0.169459ms)
+✔ KPI duplikat ditolak (0.072958ms)
+✔ kepemimpinan wajib tepat enam kompetensi unik (0.193542ms)
+✔ kepemimpinan wajib alasan, tautan, dan level 1–4 (0.119458ms)
+✔ skor maksimum tepat 100, baik empat komponen maupun Februari (0.067458ms)
+✔ batas kategori 49/50, 69/70, 84/85 (0.068333ms)
+✔ tujuh ceklis staf dan kategori berdasarkan jumlah, bukan pembulatan (0.116209ms)
+✔ survei/ceklis yang belum tersedia tidak dianggap gagal (0.063167ms)
+✔ Asmen ambang 90% dan survei 3,0 tepat termasuk terpenuhi (0.085958ms)
+✔ Asmen tanpa jadwal jatuh tempo belum dapat dinilai (0.049875ms)
+✔ SM 10/11 terpenuhi; proporsional 4/5 belum terpenuhi (0.085542ms)
+✔ dua Yellow tanpa perbaikan: check-in kedua jadi Red, eskalasi SM+Admin (3.1065ms)
+✔ dua Yellow dengan perbaikan tetap Yellow (0.127291ms)
+✔ Yellow ketiga tanpa perbaikan tetap Red berdasarkan usulan asli sebelumnya (0.087334ms)
+✔ Asmen wajib menentukan apakah ada perbaikan pada Yellow kedua (0.159417ms)
+✔ Yellow yang diselingi Green tidak menjadi Red (0.092375ms)
+✔ Yellow wajib langkah dan tenggat perbaikan (0.077334ms)
+✔ urutan check-in tidak boleh terbalik (0.070083ms)
+✔ Green tanpa bukti ditolak; Red tetap dieskalasi sambil melengkapi bukti (0.109667ms)
+✔ dua hari kerja melewati akhir pekan dan hari libur (0.072958ms)
+✔ hari kerja mengikuti tanggal Jakarta walaupun UTC masih hari sebelumnya (0.114458ms)
+✔ waktu tanpa zona ditolak (0.06925ms)
+✔ skor 49: rencana bersama dalam 7 hari kalender; 50 dan 69: agenda mentoring (0.238083ms)
+✔ dua sesi mentoring berurutan tertunda: eskalasi hanya L&C Lead (0.119916ms)
+✔ lulus tepat di batas 9/11 dan 18/22; skor bukan input kelulusan (0.182625ms)
+✔ POC terkunci 1 Februari gagal, meski seluruh syarat lain terpenuhi (0.104375ms)
+✔ tiga Review bukan empat; pengulangan Review ditolak (0.078916ms)
+✔ setiap syarat kelulusan wajib dipenuhi (0.077958ms)
+✔ ambang kehadiran Admin bisa berubah dan harus valid (0.067542ms)
+✔ data yang belum jatuh tempo tidak langsung menggagalkan kelulusan (0.0595ms)
+✔ mentee hanya data sendiri; tidak boleh menetapkan status/level/target terkunci (0.076041ms)
+✔ Asmen dibatasi kelompok dan tidak boleh menilai capaian atau mengubah target (0.047ms)
+✔ SM menilai Feb–Agu dan kepemimpinan Mei; November milik Admin (0.044417ms)
+✔ Tim Penilaian adalah fungsi Admin yang boleh menetapkan kepemimpinan November (0.0385ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 47
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 140.969625
