@@ -1,4 +1,5 @@
-const VERSION = 'mentor-2026-10-25-v1';
+const VERSION = 'mentor-2026-10-25-v2';
+const LEGACY_VERSION = 'mentor-2026-10-25-v1';
 const TRACKS = {
   business: {name:'Entrepreneur & Business', focus:'Pertumbuhan usaha, strategi bisnis, dan akses pasar.', statements:[
     ['business_role','Saya merupakan pendiri, pemilik, direktur, atau pemimpin usaha.'],
@@ -64,12 +65,14 @@ function ageOn(dob,today) {
 }
 function validateData(p,today) {
   const errors=[];
-  for(const key of ['name','dob','email','phone','city','ipbProgram','ipbCohort','organization','position','level','track']) if(typeof p[key]!=='string'||!p[key].trim()||p[key].length>200) errors.push('Lengkapi data '+key+'.');
+  for(const key of ['name','dob','email','phone','city','ipbProgram','ipbCohort','organization','position','track']) if(typeof p[key]!=='string'||!p[key].trim()||p[key].length>200) errors.push('Lengkapi data '+key+'.');
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email||'')) errors.push('Periksa alamat email.');
   if(!/^\+?[\d\s()-]{9,22}$/.test(p.phone||'')) errors.push('Periksa nomor WhatsApp.');
-  if(!/^\d{4}$/.test(p.ipbCohort||'')||Number(p.ipbCohort)<1900||Number(p.ipbCohort)>Number(today.slice(0,4))) errors.push('Periksa tahun masuk IPB.');
+  if(p.version===LEGACY_VERSION){
+    if(!/^\d{4}$/.test(p.ipbCohort||'')||Number(p.ipbCohort)<1900||Number(p.ipbCohort)>Number(today.slice(0,4))) errors.push('Periksa tahun masuk IPB.');
+  }else if(!/^[1-9]\d{0,2}$/.test(p.ipbCohort||'')) errors.push('Periksa angkatan IPB. Gunakan nomor angkatan, misalnya 35.');
   if((ageOn(p.dob,today)??-1)<41) errors.push('Usia minimal 41 tahun saat mendaftar.');
-  if(!['c-level','equivalent'].includes(p.level)) errors.push('Pilih C-Level atau pimpinan tertinggi setara.');
+  if(p.version===LEGACY_VERSION&&!['c-level','equivalent'].includes(p.level)) errors.push('Pilih C-Level atau pimpinan tertinggi setara.');
   if(!TRACKS[p.track]) errors.push('Pilih track mentoring.');
   for(const [id,,preferred] of statementsFor(p.track)) {
     if(!['yes','no'].includes(p.answers?.[id])) errors.push('Jawab seluruh pernyataan.');
@@ -92,11 +95,11 @@ function setup() {
   if(props.getProperty('SHEET_ID')) {console.log('Penyimpanan sudah tersedia.');return;}
   const folder=DriveApp.createFolder('IPB LEAP — Pendaftaran Mentor 2026 (Privat)');
   const cv=folder.createFolder('CV Mentor — Privat');
-  const book=SpreadsheetApp.create('IPB LEAP 2026 — Pendaftaran Senior Mentor');
+  const book=SpreadsheetApp.create('IPB LEAP 2026 — Pendaftaran Mentor');
   DriveApp.getFileById(book.getId()).moveTo(folder);
   const sheet=book.getSheets()[0];sheet.setName('Pendaftaran');
-  const headers=['Nomor pendaftaran','ID permintaan','Waktu WIB','Status verifikasi','Nama lengkap','Tanggal lahir','Usia saat mendaftar','Email','WhatsApp','Kota domisili','Tahun masuk IPB','Program studi / fakultas','Organisasi','Jabatan','Tingkat kepemimpinan','Track','LinkedIn','Nama CV','Tautan CV privat','Persetujuan data','Versi kriteria','Jawaban pernyataan (JSON)','Catatan tim'];
-  sheet.getRange(1,1,1,headers.length).setValues([headers]).setFontWeight('bold').setBackground('#f1f3f4');sheet.setFrozenRows(1);sheet.getRange(1,1,1,headers.length).createFilter();sheet.setColumnWidths(1,headers.length,160);sheet.setColumnWidth(22,450);
+  const headers=['Nomor pendaftaran','ID permintaan','Waktu WIB','Status verifikasi','Nama lengkap','Tanggal lahir','Usia saat mendaftar','Email','WhatsApp','Kota domisili','Tahun masuk IPB','Program studi / fakultas','Organisasi','Jabatan','Tingkat kepemimpinan','Track','LinkedIn','Nama CV','Tautan CV privat','Persetujuan data','Versi kriteria','Jawaban pernyataan (JSON)','Catatan tim','Angkatan IPB'];
+  sheet.getRange(1,1,1,headers.length).setValues([headers]).setFontWeight('bold').setBackground('#f1f3f4');sheet.setFrozenRows(1);sheet.getRange(1,1,sheet.getMaxRows(),headers.length).createFilter();sheet.setColumnWidths(1,headers.length,160);sheet.setColumnWidth(22,450);
   props.setProperties({SHEET_ID:book.getId(),CV_FOLDER_ID:cv.getId(),ROOT_FOLDER_ID:folder.getId()});
   console.log('Spreadsheet privat: '+book.getUrl());console.log('Folder privat: '+folder.getUrl());
 }
@@ -115,7 +118,7 @@ function doPost(e) {
     const p=JSON.parse(e.parameter.payload);nonce=String(p.nonce||'');
     if(!/^[a-f0-9-]{36}$/.test(nonce)||!/^[-a-f0-9]{36}$/.test(p.requestId||''))throw new Error('Nomor permintaan tidak valid.');
     const today=Utilities.formatDate(new Date(),'Asia/Jakarta','yyyy-MM-dd');
-    const errors=validateData(p,today);if(p.version!==VERSION)errors.push('Versi formulir berubah. Muat ulang halaman.');
+    const errors=validateData(p,today);if(![VERSION,LEGACY_VERSION].includes(p.version))errors.push('Versi formulir berubah. Muat ulang halaman.');
     const fileError=validateFile(p.cv);if(fileError)errors.push(fileError);
     if(errors.length)throw new Error(errors.join(' '));
     if(typeof p.cv.data!=='string'||!/^[A-Za-z0-9+/]+={0,2}$/.test(p.cv.data))throw new Error('Berkas CV tidak valid.');
@@ -138,7 +141,7 @@ function doPost(e) {
       const cv=DriveApp.getFolderById(props.getProperty('CV_FOLDER_ID')).createFile(Utilities.newBlob(bytes,mime,id+'.'+ext));
       const clean=function(s){s=String(s||'').trim();return /^[=+@\-\t\r]|^0\d/.test(s)?"'"+s:s;};
       const answers={};statementsFor(p.track).forEach(function(item){answers[item[0]]={pernyataan:item[1],jawaban:p.answers[item[0]]==='yes'?'Setuju':'Tidak setuju',diutamakan:!!item[2]};});
-      const row=[id,p.requestId,Utilities.formatDate(new Date(),'Asia/Jakarta','yyyy-MM-dd HH:mm:ss'),'Menunggu verifikasi tim',p.name,p.dob,ageOn(p.dob,today),p.email,p.phone,p.city,p.ipbCohort,p.ipbProgram,p.organization,p.position,p.level==='c-level'?'C-Level':'Pimpinan tertinggi setara — wajib verifikasi',TRACKS[p.track].name,p.linkedin||'',p.cv.name,cv.getUrl(),'Setuju',VERSION,JSON.stringify(answers),''];
+      const row=[id,p.requestId,Utilities.formatDate(new Date(),'Asia/Jakarta','yyyy-MM-dd HH:mm:ss'),'Menunggu verifikasi tim',p.name,p.dob,ageOn(p.dob,today),p.email,p.phone,p.city,p.version===LEGACY_VERSION?p.ipbCohort:'',p.ipbProgram,p.organization,p.position,p.version===LEGACY_VERSION?(p.level==='c-level'?'C-Level':'Pimpinan tertinggi setara — wajib verifikasi'):'',TRACKS[p.track].name,p.linkedin||'',p.cv.name,cv.getUrl(),'Setuju',p.version,JSON.stringify(answers),'',p.version===VERSION?p.ipbCohort:''];
       try{sheet.appendRow(row.map(clean));SpreadsheetApp.flush();}catch(err){cv.setTrashed(true);throw err;}
       cache.put(rateKey,String(count+1),21600);
       return response_(nonce,{ok:true,id:id});

@@ -1,4 +1,4 @@
-# Pendaftaran Senior Mentor IPB LEAP
+# Pendaftaran Mentor IPB LEAP
 
 Halaman publik: `/daftar-mentor/`. Tampilan memakai logo, font, dan warna asli IPB LEAP. Tombol pendaftaran juga tersedia di tab Daftar pada beranda.
 
@@ -24,3 +24,5 @@ Untuk perubahan server: perbarui `Code.gs` di proyek Google yang sama, simpan, l
 ## Pemeriksaan
 
 `npm test` mencakup modul lama dan enam pengujian pendaftaran baru: batas usia, lima track, kesetaraan jabatan, kriteria diutamakan, persetujuan/CV, validasi server, formula injection, dan pengiriman ulang. Uji browser dan pengiriman nyata dicatat terpisah pada catatan penyerahan.
+
+Revisi formulir v2: nomor angkatan disimpan di kolom X, sedangkan tahun masuk pada formulir v1 tetap di K. Kolom tingkat kepemimpinan tidak diminta pada v2; verifikasi jabatan tetap melalui jabatan resmi, CV, dan pernyataan kelayakan. Permintaan v1 yang sudah terbuka tetap diterima tanpa menafsirkan ulang data lamanya.

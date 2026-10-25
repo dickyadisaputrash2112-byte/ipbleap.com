@@ -1,4 +1,5 @@
-export const VERSION = 'mentor-2026-10-25-v1';
+export const VERSION = 'mentor-2026-10-25-v2';
+export const LEGACY_VERSION = 'mentor-2026-10-25-v1';
 export const TRACKS = {
   business: {name:'Entrepreneur & Business', focus:'Pertumbuhan usaha, strategi bisnis, dan akses pasar.', statements:[
     ['business_role','Saya merupakan pendiri, pemilik, direktur, atau pemimpin usaha.'],
@@ -64,12 +65,14 @@ export function ageOn(dob,today) {
 }
 export function validateData(p,today) {
   const errors=[];
-  for(const key of ['name','dob','email','phone','city','ipbProgram','ipbCohort','organization','position','level','track']) if(typeof p[key]!=='string'||!p[key].trim()||p[key].length>200) errors.push('Lengkapi data '+key+'.');
+  for(const key of ['name','dob','email','phone','city','ipbProgram','ipbCohort','organization','position','track']) if(typeof p[key]!=='string'||!p[key].trim()||p[key].length>200) errors.push('Lengkapi data '+key+'.');
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email||'')) errors.push('Periksa alamat email.');
   if(!/^\+?[\d\s()-]{9,22}$/.test(p.phone||'')) errors.push('Periksa nomor WhatsApp.');
-  if(!/^\d{4}$/.test(p.ipbCohort||'')||Number(p.ipbCohort)<1900||Number(p.ipbCohort)>Number(today.slice(0,4))) errors.push('Periksa tahun masuk IPB.');
+  if(p.version===LEGACY_VERSION){
+    if(!/^\d{4}$/.test(p.ipbCohort||'')||Number(p.ipbCohort)<1900||Number(p.ipbCohort)>Number(today.slice(0,4))) errors.push('Periksa tahun masuk IPB.');
+  }else if(!/^[1-9]\d{0,2}$/.test(p.ipbCohort||'')) errors.push('Periksa angkatan IPB. Gunakan nomor angkatan, misalnya 35.');
   if((ageOn(p.dob,today)??-1)<41) errors.push('Usia minimal 41 tahun saat mendaftar.');
-  if(!['c-level','equivalent'].includes(p.level)) errors.push('Pilih C-Level atau pimpinan tertinggi setara.');
+  if(p.version===LEGACY_VERSION&&!['c-level','equivalent'].includes(p.level)) errors.push('Pilih C-Level atau pimpinan tertinggi setara.');
   if(!TRACKS[p.track]) errors.push('Pilih track mentoring.');
   for(const [id,,preferred] of statementsFor(p.track)) {
     if(!['yes','no'].includes(p.answers?.[id])) errors.push('Jawab seluruh pernyataan.');
