@@ -136,7 +136,7 @@ function doPost(e) {
       const id='LEAP-M-'+today.replace(/-/g,'')+'-'+Utilities.getUuid().replace(/-/g,'').slice(0,8).toUpperCase();
       const mime={pdf:'application/pdf',doc:'application/msword',docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}[ext];
       const cv=DriveApp.getFolderById(props.getProperty('CV_FOLDER_ID')).createFile(Utilities.newBlob(bytes,mime,id+'.'+ext));
-      const clean=function(s){s=String(s||'').trim();return /^[=+@\-\t\r]/.test(s)?"'"+s:s;};
+      const clean=function(s){s=String(s||'').trim();return /^[=+@\-\t\r]|^0\d/.test(s)?"'"+s:s;};
       const answers={};statementsFor(p.track).forEach(function(item){answers[item[0]]={pernyataan:item[1],jawaban:p.answers[item[0]]==='yes'?'Setuju':'Tidak setuju',diutamakan:!!item[2]};});
       const row=[id,p.requestId,Utilities.formatDate(new Date(),'Asia/Jakarta','yyyy-MM-dd HH:mm:ss'),'Menunggu verifikasi tim',p.name,p.dob,ageOn(p.dob,today),p.email,p.phone,p.city,p.ipbCohort,p.ipbProgram,p.organization,p.position,p.level==='c-level'?'C-Level':'Pimpinan tertinggi setara — wajib verifikasi',TRACKS[p.track].name,p.linkedin||'',p.cv.name,cv.getUrl(),'Setuju',VERSION,JSON.stringify(answers),''];
       try{sheet.appendRow(row.map(clean));SpreadsheetApp.flush();}catch(err){cv.setTrashed(true);throw err;}
