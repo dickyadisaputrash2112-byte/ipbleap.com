@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-mobile3">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261028-journey1">
 <title>Top Navbar</title>
 <script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
-<script src="assets/site.js?v=20261017-uat1" defer></script></head>
+<script src="assets/site.js?v=20261028-journey1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -329,11 +329,13 @@ class Component extends DCLogic {
       { label: 'Ringkasan kelompok', desc: 'Anggota, status lampu, update terbaru', href: 'Monitoring.dc.html', short: 'KL', tint: '#E3F3F8' },
       { label: 'Monitoring progres', desc: 'Riwayat update & kehadiran per bulan', href: 'MonitoringProgres.dc.html', short: 'MO', tint: '#E4EBF8' },
       { label: 'Catat sesi mentoring', desc: 'Kehadiran, topik, tindak lanjut', href: 'CatatSesi.dc.html', short: 'CS', tint: '#E7E6F3' },
-      { label: 'Penilaian & bukti', desc: 'Check-in, Review KPI & kepemimpinan', href: 'Penilaian.dc.html', short: 'PN', tint: '#EEFFB8' }
+      { label: 'Worksheet ABC', desc: 'Antrean refleksi dan tindak lanjut', href: 'WorksheetABC.dc.html', short: 'AB', tint: '#E7E6F3' },
+      { label: 'POC mentee', desc: 'Arah, KPI, dan kesepakatan', href: 'POC.dc.html', short: 'PO', tint: '#E4EBF8' },
+      { label: 'Penilaian & bukti', desc: 'Raport, hasil aktual & bukti', href: 'Penilaian.dc.html', short: 'PN', tint: '#EEFFB8' }
     ];
     const programP = { key: 'program', label: 'Program', children: [
       { label: 'Monitoring program', desc: 'Status semua kelompok', href: 'MonitoringProgres.dc.html', short: 'MO', tint: '#E4EBF8' },
-      { label: 'Penilaian & bukti', desc: 'Hasil, bukti & Review mentee', href: 'Penilaian.dc.html', short: 'PN', tint: '#EEFFB8' },
+      { label: 'Penilaian & bukti', desc: 'POC, ABC, Review & penilaian akhir', href: 'Penilaian.dc.html', short: 'PN', tint: '#EEFFB8' },
       { label: 'Kelola event', desc: 'Buat event & pendaftaran', href: 'KelolaEvent.dc.html', short: 'EV', tint: '#E3F3F8' },
       { label: 'Pengumuman', desc: 'Kirim ke role, kelompok, orang', href: 'Pengumuman.dc.html', short: 'PG', tint: '#E7E6F3' }
     ] };
@@ -352,7 +354,9 @@ class Component extends DCLogic {
         { key: 'beranda', label: 'Beranda', href: 'BerandaMentee.dc.html' },
         { key: 'program', label: 'Program', children: [
           { label: 'Progres & Project', desc: 'Update bulanan dan final project', href: 'BerandaMentee.dc.html', short: 'PR', tint: '#E3F3F8' },
-          { label: 'Raport', desc: 'Skor Review, bukti & perkembangan', href: 'Raport.dc.html', short: 'RP', tint: '#EEFFB8' }
+          { label: 'Personal Outcome Contract', desc: 'Arah, KPI, dan target bertahap', href: 'POC.dc.html', short: 'PO', tint: '#E4EBF8' },
+          { label: 'Worksheet ABC', desc: 'Refleksi dan komitmen kegiatan', href: 'WorksheetABC.dc.html', short: 'AB', tint: '#E7E6F3' },
+          { label: 'Raport', desc: 'Nilai bulanan, capaian & langkah berikutnya', href: 'Raport.dc.html?person=mentee-01&month=2026-09', short: 'RP', tint: '#EEFFB8' }
         ] }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'BerandaMentee.dc.html' }]),
       asmen: [
@@ -366,14 +370,15 @@ class Component extends DCLogic {
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'Proker.dc.html' }]),
       bendahara: [
         { key: 'beranda', label: 'Beranda', href: 'BerandaPengurus.dc.html' },
-        programP,
+        { key: 'keuangan', label: 'Keuangan', href: 'Keuangan.dc.html' },
         { key: 'workspace', label: 'Workspace', children: wsBase.concat([{ label: 'Keuangan', desc: 'Khusus Bendahara: cashflow & RAB', href: 'Keuangan.dc.html', short: 'Rp', tint: '#EEFFB8' }]) }
       ].concat(tail, [{ key: 'task', label: 'Task', href: 'Proker.dc.html' }]),
       superadmin: [
         { key: 'beranda', label: 'Sistem', href: 'SuperAdmin.dc.html' },
         { key: 'pengguna', label: 'Pengguna & Role', href: 'SuperAdmin.dc.html' },
         { key: 'data', label: 'Data & Batch', href: 'SuperAdmin.dc.html' },
-        { key: 'audit', label: 'Audit Log', href: 'SuperAdmin.dc.html' }
+        { key: 'audit', label: 'Audit Log', href: 'SuperAdmin.dc.html' },
+        { key: 'pengembangan', label: 'Audit POC & ABC', href: 'Workspace.dc.html' }
       ]
     };
     menus.mentor = menus.asmen;
@@ -385,8 +390,12 @@ class Component extends DCLogic {
       bendahara: { name: 'Bendahara', subtitle: 'Steering Team IPB Leap 2026', initials: 'BD', avatarBg: 'linear-gradient(135deg,#32306F,#7DBBD0)', roleLabel: 'Bendahara', roleBg: '#D4FF3A', roleInk: '#0D0D1A' },
       superadmin: { name: 'Super Admin', subtitle: 'Penjaga sistem & data', initials: 'SA', avatarBg: 'linear-gradient(135deg,#0D0D1A,#E5484D)', roleLabel: 'Super Admin', roleBg: '#0D0D1A', roleInk: '#D4FF3A' }
     };
-    const p = people[role] || people.mentee;
-    const items = (menus[role] || menus.mentee).map((m) => {
+    const p = Object.assign({},people[role] || people.mentee);
+    if(role==='mentee'&&this.props.menteeName){p.name=this.props.menteeName;p.initials=this.props.initials;p.subtitle='Mentee · Kelompok '+this.props.groupName;}
+    const context=new URLSearchParams(location.search);
+    function contextualize(m){const out=Object.assign({},m);if(m.href){const u=new URL(m.href,location.href);u.searchParams.set('role',role);if(/(?:POC|WorksheetABC|Raport|Workspace|Penilaian|UpdateProgres)\.dc\.html$/.test(u.pathname))for(const k of ['person','group','realm','period','month'])if(context.has(k))u.searchParams.set(k,context.get(k));out.href=u.pathname+u.search;}if(m.children)out.children=m.children.map(contextualize);return out;}
+
+    const items = (menus[role] || menus.mentee).map(contextualize).map((m) => {
       const on = m.key === active;
       const open = this.state.open === m.key;
       return Object.assign({}, m, {

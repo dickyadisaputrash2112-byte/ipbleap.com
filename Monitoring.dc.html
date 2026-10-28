@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-mobile3">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261028-journey1">
 <title>Kelompok &amp; Monitoring · IPB Leap Management System</title>
 <script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
-<script src="assets/site.js?v=20261017-uat1" defer></script></head>
+<script src="assets/site.js?v=20261028-journey1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -244,6 +244,8 @@ textarea:focus{outline:none;border-color:#3157A5 !important}
   </div>
 
   <main style="max-width: 1360px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-direction: column; gap: 24px">
+<section class="journey-home rise" aria-label="Perkembangan mentee terpilih"><span class="journey-kicker">MENTEE TERPILIH · {{selName}}</span><div class="journey-home-head"><div><h2>Arah, refleksi, dan hasil</h2><p>Buka catatan dengan mentee yang sama. Catatan modul baru tersimpan di browser ini.</p></div><div style="display:flex;gap:14px;flex-wrap:wrap"><a href="{{pocHref}}">POC →</a><a href="{{abcHref}}">Worksheet ABC →</a><a href="{{raportHref}}">Raport &amp; bukti →</a><a href="{{monthlyHref}}">Update bulanan →</a></div></div></section>
+
 
     <div class="rise" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px">
       <div>
@@ -358,7 +360,7 @@ textarea:focus{outline:none;border-color:#3157A5 !important}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { view: sessionStorage.getItem('ipb-leap-preview-role') === 'mentor' ? 'mentor' : 'asmen', sel: 'm1', reviewed: {} };
+    this.state = { view: sessionStorage.getItem('ipb-leap-preview-role') === 'mentor' ? 'mentor' : 'asmen', sel: ({'mentee-01':'m1','mentee-02':'m2','mentee-03':'m3','mentee-04':'m4'}[new URLSearchParams(location.search).get('person')]||'m1'), reviewed: {} };
   }
   renderVals() {
     const st = this.state;
@@ -374,7 +376,7 @@ class Component extends DCLogic {
         pressed: on ? 'true' : 'false',
         pingClass: d.light === '#F59E0B' ? 'ping' : '',
         cardStyle: 'display: flex; flex-direction: column; align-items: stretch; padding: 20px; border-radius: 24px; font: inherit; color: #0D0D1A; cursor: pointer; text-align: left; background: linear-gradient(180deg,#FFFFFF,#F9FAFE); border: 1.5px solid ' + (on ? '#3157A5' : 'rgba(50,48,111,.08)') + '; box-shadow: ' + (on ? '0 20px 40px -24px rgba(49,87,165,.8)' : '0 14px 30px -26px rgba(50,48,111,.5)'),
-        pick: () => this.setState({ sel: d.id })
+        pick: () => {const q=new URLSearchParams(location.search);q.set('person','mentee-0'+d.id.slice(1));q.set('group','rajawali');history.replaceState(null,'',location.pathname+'?'+q);this.setState({ sel: d.id });}
       });
     });
     const cur = defs.find((d) => d.id === st.sel);
@@ -384,6 +386,10 @@ class Component extends DCLogic {
     return {
       mentees: mentees,
       selName: cur.name,
+      pocHref:'POC.dc.html?role='+st.view+'&person=mentee-0'+st.sel.slice(1)+'&group=rajawali&realm=user',
+      abcHref:'WorksheetABC.dc.html?role='+st.view+'&person=mentee-0'+st.sel.slice(1)+'&group=rajawali&realm=user&page=abc',
+      raportHref:'Raport.dc.html?role='+st.view+'&person=mentee-0'+st.sel.slice(1)+'&group=rajawali&realm=user&month=2026-09',
+      monthlyHref:'UpdateProgres.dc.html?role='+st.view+'&person=mentee-0'+st.sel.slice(1)+'&group=rajawali&realm=user',
       selFirst: cur.name.split(' ')[0],
       isAsmen: st.view === 'asmen',
       isMentor: st.view === 'mentor',
@@ -391,8 +397,8 @@ class Component extends DCLogic {
       mentorTab: st.view === 'mentor' ? tabOn : tabOff,
       asmenPressed: st.view === 'asmen' ? 'true' : 'false',
       mentorPressed: st.view === 'mentor' ? 'true' : 'false',
-      asAsmen: () => this.setState({ view: 'asmen' }),
-      asMentor: () => this.setState({ view: 'mentor' }),
+      asAsmen: () => {sessionStorage.setItem('ipb-leap-preview-role','asmen');this.setState({ view: 'asmen' });},
+      asMentor: () => {sessionStorage.setItem('ipb-leap-preview-role','mentor');this.setState({ view: 'mentor' });},
       reviewLabel: done ? '✓ Ditinjau' : 'Kirim & tandai ditinjau',
       reviewStyle: 'height: 48px; padding: 0 18px; border-radius: 14px; border: 0; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; ' + (done ? 'background: #D4FF3A; color: #0D0D1A' : 'background: #0D0D1A; color: #FFFFFF'),
       markReviewed: () => { const r = Object.assign({}, st.reviewed); r[st.sel] = true; this.setState({ reviewed: r }); }

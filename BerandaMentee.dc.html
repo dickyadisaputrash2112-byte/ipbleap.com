@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-mobile3">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261028-journey1">
 <title>Beranda Mentee · IPB Leap Management System</title>
 <script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
-<script src="assets/site.js?v=20261017-uat1" defer></script></head>
+<script src="assets/journey/home-bridge.js?v=20261028-journey1" defer></script>
+<script src="assets/site.js?v=20261028-journey1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -275,7 +276,7 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
       <section class="rise d1 lift" style="flex: 1 1 340px; min-width: 0; border-radius: 32px; padding: 28px; background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFF 100%); border: 1px solid rgba(50,48,111,.08); box-shadow: inset 0 1px 0 #FFFFFF, 0 18px 40px -28px rgba(50,48,111,.45); display: flex; flex-direction: column; gap: 16px">
         <div style="display: flex; justify-content: space-between; align-items: center">
           <span style="font-size: 14px; font-weight: 700; color: #55577A">Nilai bulanan · September</span>
-          <a href="Raport.dc.html" style="font-size: 13px; font-weight: 700">Raport →</a>
+          <a href="Raport.dc.html?role=mentee&amp;person=mentee-01&amp;month=2026-09&amp;realm=user" style="font-size: 13px; font-weight: 700">Raport →</a>
         </div>
         <div style="display: flex; align-items: flex-end; gap: 12px">
           <span style="font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 72px; line-height: .9; color: #32306F; letter-spacing: -.03em">{{score}}</span>
@@ -407,6 +408,7 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
       </section>
     </div>
 
+    <section class="journey-home rise d2" aria-labelledby="journey-title"><div class="journey-home-head"><div><span class="journey-kicker">ARAH · REFLEKSI · TINDAKAN</span><h2 id="journey-title">Langkah pengembanganmu</h2><p>Hubungkan rencana dan pengalaman kegiatan dengan tindakan nyata.</p></div><a class="journey-action" href="WorksheetABC.dc.html?role=mentee&amp;person=mentee-01&amp;realm=user">Buka Worksheet ABC ↗</a></div><div class="journey-home-grid"><article><span class="journey-kicker">PERSONAL OUTCOME CONTRACT</span><h3>Arah dan targetmu</h3><p>{{pocSummary}}</p><a href="POC.dc.html?role=mentee&amp;person=mentee-01&amp;realm=user">Buka POC →</a></article><article><span class="journey-kicker">WORKSHEET ABC</span><h3>Refleksi jadi langkah nyata</h3><p>{{abcSummary}}</p><a href="WorksheetABC.dc.html?role=mentee&amp;person=mentee-01&amp;realm=user">Catatan dan komitmen →</a></article></div><p class="journey-storage-note">Catatan dan pengajuan pada modul baru tersimpan di browser ini. Identitas dan data beranda adalah contoh.</p></section>
     <div style="display: flex; flex-wrap: wrap; gap: 24px">
       <section style="flex: 999 1 600px; min-width: 0; border-radius: 28px; padding: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08); box-shadow: 0 18px 40px -30px rgba(50,48,111,.45)">
         <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 22px">
@@ -431,6 +433,7 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
       </section>
     </div>
 
+
   </main>
 </div>
 </x-dc>
@@ -438,16 +441,19 @@ textarea:focus{outline:none;border-color:#3157A5 !important;box-shadow:0 0 0 4px
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { update: new URLSearchParams(location.search).get('update') === '1', sent: false, done: { t1: true } };
+    this.state = { update: false, sent: false, done: { t1: true } };
   }
+  componentDidMount(){if(new URLSearchParams(location.search).get('update')==='1')location.replace('UpdateProgres.dc.html?role=mentee&person=mentee-01');}
   renderVals() {
+    const journey=window.LEAPHome.read();
     const defs = [
       { id: 't1', title: 'RSVP Sesi Mentoring #6', meta: 'Sab, 18 Okt', tag: 'Event', tagBg: '#E4EBF8', tagInk: '#3157A5' },
       { id: 't2', title: 'Update progres Oktober', meta: 'Tenggat 31 Okt', tag: 'Wajib', tagBg: '#FEF3C7', tagInk: '#92400E' },
       { id: 't3', title: 'Feedback 360° untuk Asmen & Mentor', meta: 'Dibuka 25 Okt', tag: 'Penilaian', tagBg: '#EEFFB8', tagInk: '#3A4A00' },
       { id: 't4', title: 'Unggah draft proposal final project', meta: 'Tenggat 15 Nov', tag: 'Project', tagBg: '#E7E6F3', tagInk: '#32306F' }
     ];
-    const done = this.state.done;
+    defs.push(...journey.tasks.map(t=>({...t,tag:'Pengembangan',tagBg:'#E4EBF8',tagInk:'#3157A5'})));
+    const done = Object.assign({},this.state.done,journey.updateSubmitted?{t2:true}:{});
     const tasks = defs.map((d) => {
       const on = !!done[d.id];
       return Object.assign({}, d, {
@@ -456,17 +462,17 @@ class Component extends DCLogic {
         rowStyle: 'display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px; border-radius: 16px; border: 1px solid ' + (on ? '#E3E7F2' : '#EEF0F7') + '; background: ' + (on ? '#F7F8FC' : '#FFFFFF') + '; font: inherit; cursor: pointer; color: #0D0D1A',
         boxStyle: 'width: 24px; height: 24px; flex: none; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #0D0D1A; ' + (on ? 'background: #D4FF3A; border: 2px solid #D4FF3A' : 'background: #FFFFFF; border: 2px solid #C9CFE2'),
         titleStyle: 'font-size: 14.5px; font-weight: 700; ' + (on ? 'text-decoration: line-through; color: #8A8CA8' : ''),
-        toggle: () => { const n = Object.assign({}, this.state.done); n[d.id] = !on; this.setState({ done: n }); }
+        toggle: () => { if(d.href||d.id==='t2'){location.href=d.href||'UpdateProgres.dc.html?role=mentee&person=mentee-01&realm=user';return;}const n = Object.assign({}, this.state.done); n[d.id] = !on; this.setState({ done: n }); }
       });
     });
     return {
-      score: '86,4',
+      score: '86,4',pocSummary:journey.poc,abcSummary:journey.abc,
       tasks: tasks,
       doneCount: tasks.filter((t) => done[t.id]).length,
       updateOpen: this.state.update,
       sent: this.state.sent,
       notSent: !this.state.sent,
-      openUpdate: () => this.setState({ update: true, sent: false }),
+      openUpdate: () => { location.href='UpdateProgres.dc.html?role=mentee&person=mentee-01&realm=user'; },
       closeUpdate: () => this.setState({ update: false, sent: false }),
       sendUpdate: () => { const n = Object.assign({}, this.state.done); n.t2 = true; this.setState({ sent: true, done: n }); }
     };

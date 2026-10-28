@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="id"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261017-mobile3">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="assets/site.css?v=20261028-journey1">
 <title>Monitoring Progres · IPB Leap Management System</title>
 <script src="assets/react.js"></script><script src="assets/react-dom.js"></script><script src="assets/runtime.js?v=20261017-uat1"></script>
-<script src="assets/site.js?v=20261017-uat1" defer></script></head>
+<script src="assets/site.js?v=20261028-journey1" defer></script></head>
 <body>
 <x-dc>
 <helmet>
@@ -353,7 +353,7 @@ class Component extends DCLogic {
         return {
           label: L[x[0]], sub: x[1],
           style: 'width: 100%; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 10px 12px; border-radius: 14px; font: inherit; cursor: pointer; text-align: left; background: ' + c.bg + '; color: ' + c.ink + '; border: 2px ' + (x[0] === 'N' ? 'dashed ' : 'solid ') + (on ? '#32306F' : c.border),
-          open: () => this.setState({ sel: key })
+          open: () => {const q=new URLSearchParams(location.search);q.set('person','mentee-0'+d.id.slice(1));q.set('group','rajawali');q.set('month','2026-'+String(i+8).padStart(2,'0'));history.replaceState(null,'',location.pathname+'?'+q);this.setState({ sel: key });}
         };
       }),
       att: d.att.split('').map((k) => ({ bg: A[k][0], ink: A[k][1], mark: A[k][2], title: A[k][3] }))
