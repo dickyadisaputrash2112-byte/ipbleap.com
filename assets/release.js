@@ -1,0 +1,3 @@
+'use strict';
+// Version sibling imports as well as page navigation so old menus do not linger in browser caches.
+(()=>{const version='20261028-journey2';window.__resources=Object.assign({},window.__resources,{'./Navbar.dc.html':'Navbar.dc.html?v='+version});document.addEventListener('click',event=>{const link=event.target.closest?.('a[href]');if(!link||link.hasAttribute('download'))return;const raw=link.getAttribute('href');if(!raw||raw.startsWith('#'))return;let url;try{url=new URL(raw,location.href)}catch{return}if(url.origin!==location.origin||!(/\.html$/.test(url.pathname)||url.pathname==='/'))return;url.searchParams.set('v',version);link.href=url.pathname+url.search+url.hash;},true);})();

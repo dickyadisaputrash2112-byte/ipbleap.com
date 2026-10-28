@@ -39,4 +39,4 @@ Sumber TypeScript dan rancangan 41 tabel berada di `assessment-engine/`; browser
 
 Penyimpanan baru: `ipbleap-workspace-integrated-user-v1`, `ipbleap-workspace-integrated-example-v1`, dan preferensi `ipbleap-workspace-integrated-view-v1`. Penyimpanan modul penilaian lama tidak dibaca atau diubah. Catatan dari file lokal/localhost tidak otomatis berpindah ke domain publik. Semua peran, identitas, pengajuan, dan penerbitan adalah simulasi di browser yang sama; belum ada autentikasi atau sinkronisasi antar akun/perangkat.
 
-Pengujian tambahan: `node tests/journey-core.cjs` (29 pemeriksaan alur inti); `npm test` (termasuk 8 pemeriksaan integrasi tambahan). Catatan validasi baru ada di `JOURNEY-QA.md`.
+Pengujian tambahan: `node tests/journey-core.cjs` (29 pemeriksaan alur inti); `npm test` (termasuk 9 pemeriksaan integrasi tambahan). Catatan validasi baru ada di `JOURNEY-QA.md`.
