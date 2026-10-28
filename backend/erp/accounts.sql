@@ -11,7 +11,7 @@ begin
   if p_action='inspect_setup' then return jsonb_build_object('email',s.bootstrap_email,'setup',true); end if;
   if p_action='reserve_setup' then
    if s.lease_until>now() then raise exception 'Aktivasi sedang diproses. Coba lagi dalam dua menit.'; end if;
-   lease_id:=gen_random_uuid(); update erp_private.settings set lease=lease_id,lease_until=now()+interval '2 minutes';
+   lease_id:=gen_random_uuid(); update erp_private.settings set lease=lease_id,lease_until=now()+interval '2 minutes' where singleton = s.singleton;
    return jsonb_build_object('email',s.bootstrap_email,'lease',lease_id);
   end if;
   if s.lease is distinct from (p->>'lease')::uuid or s.lease_until<now() then raise exception 'Aktivasi berakhir. Coba lagi.'; end if;
@@ -19,7 +19,7 @@ begin
   if u.email is distinct from s.bootstrap_email or u.email_confirmed_at is null then raise exception 'Akun aktivasi tidak cocok.'; end if;
   if exists(select 1 from public.erp_profiles where active and 'system'=any(roles)) then raise exception 'Pengelola pertama sudah aktif.'; end if;
   insert into public.erp_profiles(id,email,display_name,active,roles) values(u.id,u.email,coalesce(nullif(p->>'name',''),'Pengelola IPB LEAP'),true,array['system']) on conflict(id) do update set display_name=excluded.display_name,active=true,roles=array['system'];
-  update erp_private.settings set admin_created=true,token_hash=null,lease=null,lease_until=null;
+  update erp_private.settings set admin_created=true,token_hash=null,lease=null,lease_until=null where singleton = s.singleton;
   insert into public.erp_audit(actor_id,action,entity_id) values(u.id,'Aktivasi pengelola pertama',u.id);
   return jsonb_build_object('ok',true);
  elsif p_action in ('inspect_activation','reserve_activation','finish_activation') then
