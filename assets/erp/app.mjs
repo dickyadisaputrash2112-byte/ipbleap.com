@@ -1,5 +1,5 @@
-import{client,configured,verifiedUser,workspace,bootstrap,revision,command,recordCommand,accountCommand,errorText}from'./api.mjs?v=20261028-erp1';
-import{FIELDS,PERIODS,LEVELS,COMPETENCIES,ACTIVITIES,latest,agreed,lastCheck,round,RULE,today}from'./domain.mjs?v=20261028-erp1';
+import{client,configured,verifiedUser,workspace,bootstrap,revision,command,recordCommand,accountCommand,errorText}from'./api.mjs?v=20261029-erp2';
+import{FIELDS,PERIODS,LEVELS,COMPETENCIES,ACTIVITIES,latest,agreed,lastCheck,round,RULE,today,programMonth}from'./domain.mjs?v=20261029-erp2';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),query=new URLSearchParams(location.search);
 const labels={mentee:'Mentee',asmen:'Asisten Mentor',mentor:'Mentor',program:'Tim Program',finance:'Bendahara',system:'Super Admin'};
 let w,role,rev=0,busy=false,dirty=false,editor=null;
@@ -11,7 +11,7 @@ const number=n=>n===null||n===undefined?'—':Number(n).toLocaleString('id-ID',{
 const cohort=()=>w?.cohorts.find(c=>c.id===w.selectedCohort);
 const profile=id=>w?.profiles.find(p=>p.id===id);
 const me=()=>w.actor;
-const currentM=()=>{if(!cohort())return 1;const start=new Date(cohort().starts_on+'T00:00:00+07:00'),now=new Date(today()+'T00:00:00+07:00');return Math.max(1,Math.min(12,(now.getUTCFullYear()-start.getUTCFullYear())*12+now.getUTCMonth()-start.getUTCMonth()+1));};
+const currentM=()=>cohort()?programMonth(cohort().starts_on):1;
 const month=()=>PERIODS.includes(Number(query.get('period')))?Number(query.get('period')):PERIODS.find(m=>m>=currentM())||12;
 const group=()=>w.groups.find(g=>g.active&&w.members.some(m=>m.group_id===g.id&&m.user_id===w.selectedMentee&&m.active));
 const owns=()=>role==='mentee'&&w.selectedMentee===me().id;

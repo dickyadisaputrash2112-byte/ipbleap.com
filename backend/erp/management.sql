@@ -29,11 +29,11 @@ begin
   elsif p_action='enrol' then
    t:=(p->>'user')::uuid;k:=p->>'role';
    if k not in ('mentee','mentor','asmen','program','finance') or not exists(select 1 from public.erp_profiles where id=t and active and k=any(roles)) then raise exception 'Pilih akun aktif dengan peran sesuai.'; end if;
-   if k='mentee' and (p->>'field' not in ('Entrepreneur / Business','Academic & Research','Professional / Corporate / Bureaucracy','Politics / Public Leadership','Social & Community / Social Impact') or length(trim(p->>'pathway'))=0) then raise exception 'Isi Bidang dan pathway hasil seleksi.'; end if;
+   if k='mentee' and (coalesce(p->>'field','') not in ('Entrepreneur / Business','Academic & Research','Professional / Corporate / Bureaucracy','Politics / Public Leadership','Social & Community / Social Impact') or length(trim(coalesce(p->>'pathway','')))=0) then raise exception 'Isi Bidang dan pathway hasil seleksi.'; end if;
    insert into public.erp_enrolments(cohort_id,user_id,role,field,pathway) values(c,t,k,coalesce(p->>'field',''),coalesce(p->>'pathway','')) on conflict(cohort_id,user_id,role) do update set field=excluded.field,pathway=excluded.pathway,active=true;
   elsif p_action='group_save' then
    perform pg_advisory_xact_lock(hashtext(c::text));
-   if length(trim(p->>'name'))<2 or p->>'field' not in ('Entrepreneur / Business','Academic & Research','Professional / Corporate / Bureaucracy','Politics / Public Leadership','Social & Community / Social Impact') then raise exception 'Isi nama dan Bidang kelompok.'; end if;
+   if length(trim(p->>'name'))<2 or coalesce(p->>'field','') not in ('Entrepreneur / Business','Academic & Research','Professional / Corporate / Bureaucracy','Politics / Public Leadership','Social & Community / Social Impact') then raise exception 'Isi nama dan Bidang kelompok.'; end if;
    select array_agg(value::uuid) into ids from jsonb_array_elements_text(p->'members');ids:=coalesce(ids,'{}');
    if cardinality(ids)>5 or (select count(distinct q) from unnest(ids) q)<>cardinality(ids) then raise exception 'Kelompok maksimal lima mentee berbeda.'; end if;
    if exists(select 1 from unnest(ids) q where not exists(select 1 from public.erp_enrolments e join public.erp_profiles a on a.id=e.user_id where e.user_id=q and e.cohort_id=c and e.role='mentee' and e.active and e.field=p->>'field' and a.active and 'mentee'=any(a.roles))) then raise exception 'Mentee harus aktif di cohort dan Bidang yang sama.'; end if;

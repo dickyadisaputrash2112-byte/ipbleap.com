@@ -1,5 +1,5 @@
-import { CONFIG } from './config.mjs?v=20261028-erp1';
-import { createClient } from './vendor-supabase.mjs?v=20261028-erp1';
+import { CONFIG } from './config.mjs?v=20261029-erp2';
+import { createClient } from './vendor-supabase.mjs?v=20261029-erp2';
 
 export const configured = CONFIG.ready && /^https:\/\/[a-z0-9]+\.supabase\.co$/.test(CONFIG.url) && CONFIG.publishableKey.startsWith('sb_publishable_');
 export const client = configured ? createClient(CONFIG.url, CONFIG.publishableKey, {

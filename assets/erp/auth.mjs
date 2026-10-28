@@ -1,4 +1,4 @@
-import {client,configured,verifiedUser,safeNext,errorText,accountCommand} from './api.mjs?v=20261028-erp1';
+import {client,configured,verifiedUser,safeNext,errorText,accountCommand} from './api.mjs?v=20261029-erp2';
 const message=document.querySelector('#auth-message'),tabs=[...document.querySelectorAll('[role=tab]')];let busy=false,activation=null;
 function inform(s,type=''){message.textContent=s;message.className='auth-message '+type;}
 function select(i){tabs.forEach((t,n)=>{t.setAttribute('aria-selected',String(i===n));t.tabIndex=i===n?0:-1;document.getElementById(t.getAttribute('aria-controls')).hidden=i!==n;});}

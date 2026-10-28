@@ -16,6 +16,7 @@ const num=n=>n!==''&&n!==null&&n!==undefined&&Number.isFinite(Number(n));
 const date=s=>typeof s==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(s)&&new Date(s+'T00:00:00Z').toISOString().slice(0,10)===s;
 const link=s=>{if(!s)return;try{const u=new URL(s);if(!['https:','http:'].includes(u.protocol))fail('Tautan bukti harus menggunakan https atau http.');}catch{fail('Tautan bukti belum benar.');}};
 export const today=()=>new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+export function programMonth(startsOn,asOf=today()){const [sy,sm]=startsOn.slice(0,7).split('-').map(Number),[y,m]=asOf.slice(0,7).split('-').map(Number);return Math.max(0,Math.min(12,(y-sy)*12+m-sm+1));}
 function sentences(s){return clean(s).split(/[.!?]+(?:\s|$)/).filter(x=>x.trim()).length;}
 export function validatePOC(d){
  ['title','outcome','baselineContext','risk','support','plan'].forEach(k=>need(d[k],({title:'judul POC',outcome:'outcome',baselineContext:'kondisi awal',risk:'risiko',support:'dukungan',plan:'rencana kerja'})[k]));
