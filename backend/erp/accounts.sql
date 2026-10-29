@@ -39,7 +39,7 @@ begin
   return jsonb_build_object('ok',true);
  elsif p_action in ('authorize','provision','reissue') then
   actor:=(p->>'actor')::uuid; sid:=(p->>'session')::uuid;
-  if not exists(select 1 from public.erp_profiles p join auth.sessions s on s.user_id=p.id join auth.users u on u.id=p.id where p.id=actor and p.active and 'system'=any(p.roles) and s.id=sid and (s.not_after is null or s.not_after>now()) and u.email_confirmed_at is not null) then raise exception 'Hanya Super Admin aktif yang dapat mengelola akun.' using errcode='42501'; end if;
+  if not exists(select 1 from public.erp_profiles actor_profile join auth.sessions actor_session on actor_session.user_id=actor_profile.id join auth.users actor_user on actor_user.id=actor_profile.id where actor_profile.id=actor and actor_profile.active and 'system'=any(actor_profile.roles) and actor_session.id=sid and (actor_session.not_after is null or actor_session.not_after>now()) and actor_user.email_confirmed_at is not null) then raise exception 'Hanya Super Admin aktif yang dapat mengelola akun.' using errcode='42501'; end if;
   if p_action='authorize' then return jsonb_build_object('ok',true); end if;
   target:=(p->>'user')::uuid;
   if p_action='provision' then

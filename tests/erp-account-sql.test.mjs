@@ -14,3 +14,11 @@ test('initial activation scopes both reserve and completion to the selected sett
  const settingsUpdates=[...sql.matchAll(/update erp_private\.settings set ([^;]+);/g)];assert.equal(settingsUpdates.length,2);
  for(const m of settingsUpdates)assert.match(m[1],/where singleton = s\.singleton$/);
 });
+test('account authority aliases do not shadow PL/pgSQL settings or user records',()=>{
+ const sql=fs.readFileSync(new URL('../backend/erp/accounts.sql',import.meta.url),'utf8');
+ assert.match(sql,/auth\.sessions actor_session on actor_session\.user_id=actor_profile\.id/);
+ assert.match(sql,/auth\.users actor_user on actor_user\.id=actor_profile\.id/);
+ assert.doesNotMatch(sql,/auth\.sessions s\b|auth\.users u\b|erp_profiles p\b/);
+ assert.match(sql,/actor_session\.id=sid/);
+ assert.match(sql,/actor_user\.email_confirmed_at is not null/);
+});
