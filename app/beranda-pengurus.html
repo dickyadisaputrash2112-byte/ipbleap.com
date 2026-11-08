@@ -70,7 +70,7 @@ body{margin:0}
       <div style="position: relative">
         <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .1em; color: #A3D6E6">STEERING TEAM IPB LEAP 2026 · {{jabatanUpper}}</span>
         <h1 style="margin: 8px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 46px; line-height: 1; letter-spacing: -.02em">Fokus minggu ini.</h1>
-        <p style="margin: 12px 0 0; font-size: 15.5px; color: rgba(255,255,255,.82); max-width: 560px">{{openTasks}} task belum selesai, 1 lewat tenggat. 2 proker yang kamu pegang sedang berjalan.</p>
+        <p style="margin: 12px 0 0; font-size: 15.5px; color: rgba(255,255,255,.82); max-width: 560px">Belum ada event atau task kegiatan yang dijadwalkan.</p>
       </div>
       <div style="position: relative; display: flex; flex-wrap: wrap; gap: 10px">
         <a class="btn" href="pengumuman.html" style="height: 48px; padding: 0 18px; border-radius: 16px; background: #D4FF3A; color: #0D0D1A; font-weight: 800; font-size: 14px; text-decoration: none; display: flex; align-items: center">+ Pengumuman</a>
@@ -85,6 +85,7 @@ body{margin:0}
           <h2 style="margin: 0; font-size: 20px; font-weight: 800">Task saya</h2>
           <a href="proker.html" style="font-size: 13px; font-weight: 700">Semua task →</a>
         </div>
+        <p style="font-size:14px;color:#6B6D8C">Belum ada task kegiatan.</p>
         <div style="display: flex; flex-direction: column; gap: 8px">
           <sc-for list="{{tasks}}" as="t" hint-placeholder-count="5">
             <button type="button" onClick="{{t.toggle}}" aria-pressed="{{t.pressed}}" style="{{t.row}}">
@@ -99,11 +100,7 @@ body{margin:0}
       <aside style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
         <div class="rise d2" style="padding: 24px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
           <h2 style="margin: 0 0 14px; font-size: 18px; font-weight: 800">Jadwal minggu ini</h2>
-          <div style="display: flex; flex-direction: column; gap: 12px; font-size: 14px">
-            <div style="display: flex; gap: 12px; align-items: center"><span style="width: 50px; height: 54px; flex: none; border-radius: 16px; background: #32306F; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 10.5px; font-weight: 700; opacity: .8">RAB</span><strong style="font-size: 19px; line-height: 1">14</strong></span><span><strong style="display: block">Rapat divisi Operations</strong><span style="font-size: 12.5px; color: #6B6D8C">19.30 · Google Meet</span></span></div>
-            <div style="display: flex; gap: 12px; align-items: center"><span style="width: 50px; height: 54px; flex: none; border-radius: 16px; background: #E4EBF8; color: #3157A5; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 10.5px; font-weight: 700">JUM</span><strong style="font-size: 19px; line-height: 1">16</strong></span><span><strong style="display: block">Survei venue Leadership Camp</strong><span style="font-size: 12.5px; color: #6B6D8C">10.00 · Bogor</span></span></div>
-            <div style="display: flex; gap: 12px; align-items: center"><span style="width: 50px; height: 54px; flex: none; border-radius: 16px; background: #E3F3F8; color: #1F5566; display: flex; flex-direction: column; align-items: center; justify-content: center"><span style="font-size: 10.5px; font-weight: 700">SAB</span><strong style="font-size: 19px; line-height: 1">18</strong></span><span><strong style="display: block">Rapat Steering Team</strong><span style="font-size: 12.5px; color: #6B6D8C">09.00 · Sekretariat</span></span></div>
-          </div>
+          <p style="font-size:14px;color:#6B6D8C">Belum ada event yang dijadwalkan.</p>
         </div>
         <div class="rise d3" style="padding: 22px; border-radius: 28px; background: #F1F4FB">
           <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #6B6D8C">PROGRAM SEKILAS</span>
@@ -118,26 +115,7 @@ body{margin:0}
 
     <section style="padding: 26px; border-radius: 28px; background: #FFFFFF; border: 1px solid rgba(50,48,111,.08)">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px"><h2 style="margin: 0; font-size: 20px; font-weight: 800">Proker yang kamu pegang</h2><a href="proker.html" style="font-size: 13px; font-weight: 700">Buka workspace →</a></div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px">
-        <a class="lift" href="proker.html" style="padding: 20px; border-radius: 22px; background: linear-gradient(180deg,#FFFFFF,#F7F9FF); border: 1px solid #E3E7F2; text-decoration: none; color: #0D0D1A">
-          <div style="display: flex; justify-content: space-between"><strong style="font-size: 16px">Leadership Camp</strong><span style="font-size: 11.5px; font-weight: 800; padding: 4px 8px; border-radius: 8px; background: #E4EBF8; color: #3157A5">PIC</span></div>
-          <div style="height: 8px; border-radius: 8px; background: #E3E7F2; margin: 14px 0 10px; overflow: hidden"><div class="grow" style="width: 45%; height: 100%; background: linear-gradient(90deg,#3157A5,#A3D6E6)"></div></div>
-          <span style="font-size: 13px; color: #55577A">45% · milestone berikut: kunci venue, 20 Okt</span>
-        </a>
-        <a class="lift" href="proker.html" style="padding: 20px; border-radius: 22px; background: linear-gradient(180deg,#FFFFFF,#F7F9FF); border: 1px solid #E3E7F2; text-decoration: none; color: #0D0D1A">
-          <div style="display: flex; justify-content: space-between"><strong style="font-size: 16px">Community Gathering</strong><span style="font-size: 11.5px; font-weight: 800; padding: 4px 8px; border-radius: 8px; background: #F1F2F6; color: #55577A">Anggota</span></div>
-          <div style="height: 8px; border-radius: 8px; background: #E3E7F2; margin: 14px 0 10px; overflow: hidden"><div class="grow" style="width: 20%; height: 100%; background: linear-gradient(90deg,#3157A5,#A3D6E6)"></div></div>
-          <span style="font-size: 13px; color: #55577A">20% · konsep acara dibahas 18 Okt</span>
-        </a>
-        <div style="padding: 20px; border-radius: 22px; background: #FFFBEB; border: 1px solid #FDE68A">
-          <strong style="font-size: 15px">Dokumen terakhir dibuka</strong>
-          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 12px; font-size: 13.5px">
-            <span><strong>Konsep Leadership Camp</strong> · Docs · 2 jam lalu</span>
-            <span><strong>RAB Leadership Camp</strong> · Sheets · kemarin</span>
-            <span><strong>Survei peserta</strong> · Forms · 3 hari lalu</span>
-          </div>
-        </div>
-      </div>
+      <p style="font-size:14px;color:#6B6D8C">Belum ada proker kegiatan yang dijadwalkan.</p>
     </section>
 
     <sc-if value="{{isPic}}" hint-placeholder-val="{{ false }}">
@@ -260,17 +238,11 @@ body{margin:0}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { pic: false, dec: {}, done: { t5: true } };
+    this.state = { pic: false, dec: {}, done: {} };
   }
   renderVals() {
     const st = this.state;
-    const tdefs = [
-      { id: 't1', title: 'Negosiasi venue Leadership Camp', proker: 'Leadership Camp', due: 'Lewat 2 hari', late: true },
-      { id: 't2', title: 'Kirim rundown ke Learning & Curriculum', proker: 'Leadership Camp', due: 'Besok' },
-      { id: 't3', title: 'Finalisasi daftar vendor konsumsi', proker: 'Leadership Camp', due: 'Jum, 16 Okt' },
-      { id: 't4', title: 'Draft konsep Community Gathering', proker: 'Community Gathering', due: 'Sab, 18 Okt' },
-      { id: 't5', title: 'Notulensi rapat 11 Okt', proker: 'Rapat divisi', due: 'Selesai' }
-    ];
+    const tdefs = [];
     const tasks = tdefs.map((d) => {
       const on = !!st.done[d.id];
       return Object.assign({}, d, {

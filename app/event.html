@@ -56,10 +56,11 @@ body{margin:0}
       <div>
         <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #6B6D8C">Program · HA IPB · CDA IPB · mitra</span>
         <h1 style="margin: 6px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 54px; letter-spacing: -.02em; color: #32306F; line-height: 1">Upcoming Event</h1>
-        <p style="margin: 10px 0 0; font-size: 15px; color: #55577A">Daftar langsung di sini, data diambil dari profilmu. Gak perlu isi form lagi.</p>
+        <p style="margin: 10px 0 0; font-size: 15px; color: #55577A">Informasi kegiatan yang dijadwalkan oleh pengurus IPB LEAP.</p>
       </div>
     </div>
 
+    <sc-if value="{{noEvents}}"><section role="status" style="padding:32px 24px;border-radius:24px;background:#FFFFFF;border:1px solid #E3E7F2"><h2 style="margin:0;font-size:22px;color:#32306F">Belum ada event yang dijadwalkan</h2><p style="margin:12px 0 0;line-height:1.7;color:#55577A">Informasi event akan ditampilkan setelah jadwal resmi tersedia.</p></section></sc-if>
     <div style="display: flex; flex-wrap: wrap; gap: 8px">
       <sc-for list="{{filters}}" as="f" hint-placeholder-count="5">
         <button type="button" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="{{f.style}}">{{f.label}}</button>
@@ -240,27 +241,13 @@ body{margin:0}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { filter: 'semua', sel: 'v1', reg: {}, agreed: false };
+    this.state = { filter: 'semua', sel: null, reg: {}, agreed: false };
   }
   renderVals() {
     const st = this.state;
     const S = { 'Dibuka': ['#DCFCE7', '#166534'], 'Segera Dibuka': ['#FEF3C7', '#92400E'], 'Ditutup': ['#FEE2E2', '#991B1B'], 'Selesai': ['#F1F2F6', '#55577A'] };
-    const defs = [
-      { id: 'v1', org: 'IPB LEAP', key: 'leap', title: 'Leadership Camp 2026', kicker: 'BATCH 2026 · 3 HARI', t1: 'Leadership', t2: 'Camp', status: 'Dibuka', countdown: 'tutup 20 hari lagi', regOpen: '13 Okt', regClose: '2 Nov', eventDate: '14–16 Nov 2026', place: 'Bogor, lokasi menyusul', reg: 'platform', quota: 120, filled: 87, bg: 'linear-gradient(150deg,#32306F 10%,#3157A5)', ink: '#FFFFFF', accent: '#D4FF3A', desc: 'Tiga hari latihan memimpin lewat simulasi, outbound, dan project sprint bareng kelompok.' },
-      { id: 'v2', org: 'CDA IPB', key: 'cda', title: 'Career Day: Agri-Industry', kicker: 'CAREER DEVELOPMENT', t1: 'Career', t2: 'Day', status: 'Dibuka', countdown: 'tutup 12 hari lagi', regOpen: '1 Okt', regClose: '25 Okt', eventDate: '28 Okt 2026', place: 'Kampus IPB Dramaga', reg: 'external', bg: '#D4FF3A', ink: '#0D0D1A', accent: '#3157A5', desc: 'Bursa kerja dan sesi rekrutmen perusahaan agro-industri. Pendaftaran di situs CDA IPB.' },
-      { id: 'v3', org: 'HA IPB', key: 'ha', title: 'Diaspora Talk VIII', kicker: 'HIMPUNAN ALUMNI IPB', t1: 'Diaspora', t2: 'Talk VIII', status: 'Segera Dibuka', countdown: 'buka 7 hari lagi', regOpen: '20 Okt', regClose: '8 Nov', eventDate: '9 Nov 2026', place: 'Online', reg: 'external', bg: 'linear-gradient(160deg,#A3D6E6,#E3F3F8)', ink: '#0D0D1A', accent: '#32306F', desc: 'Alumni diaspora berbagi jalan studi dan karier di luar negeri.' },
-      { id: 'v4', org: 'CDA IPB', key: 'cda', title: 'Workshop CV & LinkedIn', kicker: 'CAREER DEVELOPMENT', t1: 'CV &', t2: 'LinkedIn', status: 'Segera Dibuka', countdown: 'buka 4 hari lagi', regOpen: '17 Okt', regClose: '30 Okt', eventDate: '1 Nov 2026', place: 'Online', reg: 'platform', quota: 200, filled: 0, bg: '#0E0D2B', ink: '#FFFFFF', accent: '#2FA3C7', desc: 'Bedah CV dan profil LinkedIn langsung bersama recruiter.' },
-      { id: 'v5', org: 'IPB LEAP', key: 'leap', title: 'Kelas Publik: Public Speaking', kicker: 'KELAS TERBUKA', t1: 'Public', t2: 'Speaking', status: 'Ditutup', countdown: 'acara 15 Okt', regOpen: '1 Okt', regClose: '10 Okt', eventDate: '15 Okt 2026', place: 'Zoom Program', reg: 'platform', quota: 300, filled: 300, bg: 'linear-gradient(150deg,#3157A5,#2FA3C7)', ink: '#FFFFFF', accent: '#FFFFFF', desc: 'Kelas terbuka untuk semua mahasiswa IPB.' },
-      { id: 'v6', org: 'IPB LEAP', key: 'leap', title: 'Menlead Talks Chapter 4', kicker: 'TALKSHOW', t1: 'Menlead', t2: 'Talks', status: 'Selesai', countdown: '27 Sep', regOpen: '10 Sep', regClose: '25 Sep', eventDate: '27 Sep 2026', place: 'Auditorium Andi Hakim Nasoetion', reg: 'platform', quota: 250, filled: 231, bg: '#E7E6F3', ink: '#32306F', accent: '#A3D6E6', desc: 'Talkshow karier profesional bersama mentor IPB LEAP.' }
-    ];
-    const extra = {
-      v1: ['14–16 Nov · 07.00–17.00 WIB', 'Offline', ['Mentee & Asmen aktif Batch 2026.', 'Wajib ikut 3 hari penuh dan menginap.', 'Membawa perlengkapan pribadi sesuai panduan yang dikirim H-7.', 'Batal maksimal H-5 agar kuota dialihkan ke daftar tunggu.']],
-      v2: ['28 Okt · 08.00–15.00 WIB', 'Offline', ['Terbuka untuk mahasiswa & alumni IPB.', 'Pendaftaran dan seleksi oleh CDA IPB.']],
-      v3: ['9 Nov · 19.30–21.30 WIB', 'Online', ['Terbuka untuk alumni muda & mahasiswa IPB.', 'Link Zoom dikirim penyelenggara H-1.']],
-      v4: ['1 Nov · 09.00–12.00 WIB', 'Hybrid', ['Peserta IPB LEAP Batch 2026.', 'Siapkan CV terbaru (PDF) sebelum sesi.', 'Wajib hadir penuh untuk e-sertifikat.']],
-      v5: ['15 Okt · 19.00–21.00 WIB', 'Online', ['Terbuka untuk mahasiswa IPB.', 'Kamera menyala saat sesi praktik.']],
-      v6: ['27 Sep · 13.00–16.00 WIB', 'Offline', ['Terbuka untuk umum.']]
-    };
+    const defs = [];
+    const extra = {};
     const FC = { Online: ['#E3F3F8', '#1F5566'], Offline: ['#E7E6F3', '#32306F'], Hybrid: ['#EEFFB8', '#3A4A00'] };
     defs.forEach((d) => { const x = extra[d.id]; d.time = x[0]; d.format = x[1]; d.sk = x[2]; d.fBg = FC[x[1]][0]; d.fInk = FC[x[1]][1]; if (x[1] === 'Hybrid') d.place = 'Kampus IPB Dramaga + Zoom'; });
     const fdefs = [['semua', 'Semua'], ['leap', 'IPB LEAP'], ['ha', 'HA IPB'], ['cda', 'CDA IPB'], ['dibuka', 'Sedang dibuka']];
@@ -283,7 +270,7 @@ class Component extends DCLogic {
     const openPlatform = cur && cur.reg === 'platform' && cur.status === 'Dibuka';
     return {
       filters: filters,
-      events: shown.map(deco),
+      events: shown.map(deco), noEvents: !shown.length,
       hasSel: !!cur,
       sel: cur ? deco(cur) : {},
       canRegister: openPlatform && !registered,

@@ -246,6 +246,7 @@ body{margin:0}
             <h3 style="margin: 0; font-size: 20px; font-weight: 800">Event terdekat</h3>
             <span style="font-size: 14px; font-weight: 800; cursor: default; color: #D4FF3A; text-decoration: none">Segera hadir</span>
           </div>
+          <sc-if value="{{noEvents}}"><div role="status" style="padding:26px;border-radius:26px;background:rgba(255,255,255,.07)"><strong style="font-size:20px">Belum ada event yang dijadwalkan</strong><p style="margin:10px 0 0;line-height:1.7;color:rgba(255,255,255,.8)">Informasi event akan ditampilkan setelah jadwal resmi tersedia.</p></div></sc-if>
           <sc-if value="{{hasNext}}" hint-placeholder-val="{{ true }}">
             <div style="position: relative; overflow: hidden; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 18px; padding: 26px; border-radius: 26px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; text-decoration: none">
               <span aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(320px 200px at 100% 0%, rgba(212,255,58,.28), transparent 70%)"></span>
@@ -517,12 +518,7 @@ class Component extends DCLogic {
     const now = new Date();
     const today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
     const mons = ['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'];
-    const evs = [
-      { title: 'Workshop CV & LinkedIn', org: 'CDA IPB', date: '2026-11-01', time: '13.00–15.00 WIB', when: 'Min, 1 Nov 2026 · 13.00–15.00 WIB', place: 'Gedung CDA IPB + Zoom', mode: 'Hybrid', status: 'Dibuka', close: '30 Okt', bg: '#0E0D2B', ink: '#FFFFFF' },
-      { title: 'Career Day: Agri-Industry', org: 'CDA IPB', date: '2026-11-05', time: '09.00–15.00 WIB', when: 'Kam, 5 Nov 2026 · 09.00–15.00 WIB', place: 'Kampus IPB Dramaga', mode: 'Offline', status: 'Dibuka', close: '3 Nov', bg: '#D4FF3A', ink: '#0D0D1A' },
-      { title: 'Diaspora Talk VIII', org: 'HA IPB', date: '2026-11-09', time: '19.30–21.00 WIB', when: 'Sen, 9 Nov 2026 · 19.30–21.00 WIB', place: 'Zoom', mode: 'Online', status: 'Segera Dibuka', close: '8 Nov', bg: '#A3D6E6', ink: '#0D0D1A' },
-      { title: 'Leadership Camp 2026', org: 'IPB LEAP', date: '2026-11-14', time: '08.00–17.00 WIB', when: '14–16 Nov 2026 · 08.00–17.00 WIB', place: 'Bogor', mode: 'Offline', status: 'Dibuka', close: '2 Nov', bg: '#32306F', ink: '#FFFFFF' }
-    ].map((e) => {
+    const evs = [].map((e) => {
       const p = e.date.split('-').map(Number);
       const t = new Date(p[0], p[1] - 1, p[2]).getTime();
       const d = Math.round((t - today0) / DAY);
@@ -540,7 +536,7 @@ class Component extends DCLogic {
     return {
       stats: stats, statsInline: stats.filter((x) => x.where === 'in'), statsFloat: stats.filter((x) => x.where === 'float'), cards: cards, tiles: tiles,
       today: now.getDate() + ' ' + mons[now.getMonth()].charAt(0) + mons[now.getMonth()].slice(1).toLowerCase() + ' ' + now.getFullYear(),
-      hasNext: !!evs[0], next: next, upcoming: evs.slice(1), news: news,
+      noEvents: !evs.length, hasNext: !!evs[0], next: next, upcoming: evs.slice(1), news: news,
       paths: ['Entrepreneur', 'Akademisi & Peneliti', 'Professional & Birokrat', 'Politik', 'Sosial & Komunitas'],
       teasers: teasers, gallery: gallery,
       sparks: this.sparks,

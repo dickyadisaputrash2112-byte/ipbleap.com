@@ -133,14 +133,7 @@ body{margin:0}
             <span style="font-size: 12.5px; color: #3157A5">Mencocokkan kolom Uraian, Volume, Harga satuan, Jumlah</span>
           </div>
         </sc-if>
-        <sc-if value="{{hasParsed}}" hint-placeholder-val="{{ false }}">
-          <div class="pop" style="flex: 1 1 300px; padding: 22px; border-radius: 22px; background: #EEFFB8; display: flex; flex-direction: column; gap: 8px">
-            <span style="font-size: 12px; font-weight: 800; letter-spacing: .08em; color: #3A4A00">✓ TERBACA OTOMATIS</span>
-            <strong style="font-size: 17px">RAB Community Gathering</strong>
-            <span style="font-size: 13.5px; color: #3A4A00">9 pos anggaran · total Rp12.400.000 · masuk ke grafik anggaran</span>
-            <span style="font-size: 12.5px; color: #3A4A00">Konsumsi Rp4,5 jt · Venue Rp3 jt · Dokumentasi Rp1,6 jt · lainnya Rp3,3 jt</span>
-          </div>
-        </sc-if>
+
       </div>
       <div style="overflow-x: auto; margin-top: 18px">
         <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px">
@@ -195,7 +188,7 @@ body{margin:0}
             <sc-if value="{{isOut}}" hint-placeholder-val="{{ true }}"><select onChange="{{onCat}}" style="width: 100%; height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Konsumsi</option><option>Transportasi</option><option>Venue</option><option>Produksi</option><option>Lainnya</option></select></sc-if>
             <sc-if value="{{isIn}}" hint-placeholder-val="{{ false }}"><select onChange="{{onCat}}" style="width: 100%; height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Sponsor</option><option>Hibah</option><option>Iuran</option><option>Lainnya</option></select></sc-if>
           </label>
-          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Proker<select onChange="{{onProker}}" style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Leadership Camp</option><option>Kelas bulanan</option><option>Merchandise</option><option>Community Gathering</option><option>Umum</option></select></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700">Proker<select onChange="{{onProker}}" style="height: 46px; padding: 0 10px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px; background: #FFFFFF"><option>Kelas bulanan</option><option>Merchandise</option><option>Umum</option></select></label>
         </div>
         <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 700; margin-top: 12px">Keterangan<input type="text" value="{{desc}}" onChange="{{onDesc}}" style="height: 46px; padding: 0 12px; border-radius: 13px; border: 1.5px solid #D5DAEA; font: inherit; font-size: 14px"></label>
         <label style="display: flex; align-items: center; gap: 12px; margin-top: 12px; padding: 14px; border-radius: 16px; border: 2px dashed #A3B4DA; background: #F8F9FD; cursor: pointer; font-size: 13.5px; font-weight: 700">Bukti (foto nota / transfer)<input type="file" accept="image/*,.pdf" onChange="{{onProof}}" style="font: inherit; font-size: 12.5px; color: #6B6D8C"></label>
@@ -292,7 +285,7 @@ body{margin:0}
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { filter: 'all', txOpen: false, kind: 'out', amount: 450000, acct: 'Kas Tunai', cat: 'Konsumsi', proker: 'Leadership Camp', desc: 'Snack rapat panitia', proof: 'nota.jpg', newTx: [], reading: false, readingName: '', parsed: false };
+    this.state = { filter: 'all', txOpen: false, kind: 'out', amount: 450000, acct: 'Kas Tunai', cat: 'Konsumsi', proker: 'Umum', desc: 'Snack rapat panitia', proof: 'nota.jpg', newTx: [], reading: false, readingName: '', parsed: false };
   }
   componentWillUnmount() { clearTimeout(this._t); }
   startRead(name) {
@@ -310,7 +303,6 @@ class Component extends DCLogic {
       ['12 Okt', 'Konsumsi Sesi Kelas Oktober', 'Konsumsi · Kelas bulanan', 'Kas Tunai', 'nota.jpg', -1850000],
       ['10 Okt', 'Sponsor tahap 2 (mitra agribisnis)', 'Sponsor · Umum', 'Rekening Program', 'transfer.pdf', 10000000],
       ['8 Okt', 'Cetak ID card 140 pcs', 'Produksi · Merchandise', 'Rekening Program', 'invoice.pdf', -2380000],
-      ['3 Okt', 'Sewa venue Leadership Camp (DP)', 'Venue · Leadership Camp', 'Rekening Program', 'kwitansi.jpg', -1870000],
       ['29 Sep', 'Hibah HA IPB', 'Hibah · Umum', 'Rekening Program', 'transfer.pdf', 20000000]
     ];
     const all = st.newTx.concat(base);
@@ -324,18 +316,15 @@ class Component extends DCLogic {
       style: 'height: 34px; padding: 0 12px; border-radius: 10px; border: 0; font: inherit; font-size: 13px; cursor: pointer; ' + (st.filter === x[0] ? 'background: #FFFFFF; color: #32306F; font-weight: 800; box-shadow: 0 4px 12px -6px rgba(50,48,111,.5)' : 'background: transparent; color: #6B6D8C; font-weight: 700'),
       pick: () => this.setState({ filter: x[0] })
     }));
-    const bdefs = [['Leadership Camp', 9.8, 25], ['Kelas bulanan', 7.2, 9], ['Merchandise & ID card', 6.4, 6], ['Graduation & FALP', 0, 30]];
-    if (st.parsed) bdefs.push(['Community Gathering', 0, 12.4, true]);
+    const bdefs = [['Kelas bulanan', 7.2, 9], ['Merchandise & ID card', 6.4, 6], ['Graduation & FALP', 0, 30]];
     const budgets = bdefs.map((b) => {
       const over = b[1] > b[2];
       return { name: b[0], used: 'Rp' + f(b[1]), total: f(b[2]) + ' jt', note: over ? ' · lewat ' + Math.round((b[1] / b[2] - 1) * 100) + '%' : (b[3] ? ' · baru' : ''), pct: Math.min(100, Math.round(b[1] / b[2] * 100)), color: over ? '#E5484D' : '#3157A5', ink: over ? '#B42318' : '#55577A', cls: b[3] ? 'flash' : '' };
     });
     const rabs = [
-      { name: 'RAB Leadership Camp v2', proker: 'Leadership Camp', src: 'Google Sheets', when: '2 Okt · Bendahara', total: 'Rp25.000.000' },
       { name: 'RAB Kelas Bulanan', proker: 'Kelas bulanan', src: 'Excel', when: '18 Agu · Bendahara', total: 'Rp9.000.000' },
       { name: 'RAB Graduation', proker: 'Graduation & FALP', src: 'Google Sheets', when: '1 Sep · Bendahara', total: 'Rp30.000.000' }
     ];
-    if (st.parsed) rabs.unshift({ name: 'RAB Community Gathering', proker: 'Community Gathering', src: st.readingName.indexOf('docs.google') >= 0 || st.readingName === 'Google Sheets' ? 'Google Sheets' : 'Excel', when: 'Baru saja · Bendahara', total: 'Rp12.400.000' });
     const totalBudget = bdefs.reduce((s, b) => s + b[2], 0);
     const cats = st.kind === 'out' ? ['Konsumsi', 'Transportasi', 'Venue', 'Produksi', 'Lainnya'] : ['Sponsor', 'Hibah', 'Iuran', 'Lainnya'];
     const segOn = 'height: 44px; border-radius: 12px; border: 0; font: inherit; font-weight: 800; font-size: 14px; cursor: pointer; background: #FFFFFF; box-shadow: 0 6px 14px -8px rgba(50,48,111,.5); color: ';

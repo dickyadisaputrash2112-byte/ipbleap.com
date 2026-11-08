@@ -70,12 +70,13 @@ body{margin:0}
     <div>
       <span style="font-size: 12.5px; font-weight: 800; letter-spacing: .12em; color: #3157A5">EVENT</span>
       <h1 class="rise" style="margin: 12px 0 0; font-family: 'Montserrat', sans-serif; font-style: italic; font-weight: 900; font-size: 64px; line-height: .96; letter-spacing: -.025em; color: #32306F">Terbuka untuk umum.</h1>
-      <p class="rise d1" style="margin: 16px 0 0; font-size: 17px; line-height: 1.65; color: #55577A; max-width: 640px">Event ini sama dengan Upcoming Event di platform. Kamu bisa daftar tanpa akun, cukup isi form singkat.</p>
+      <p class="rise d1" style="margin: 16px 0 0; font-size: 17px; line-height: 1.65; color: #55577A; max-width: 640px">Informasi event resmi IPB LEAP akan ditampilkan di halaman ini.</p>
     </div>
     <a href="app/index.html" style="font-size: 14px; font-weight: 800">Punya akun? Masuk untuk event khusus peserta →</a>
   </section>
 
   <main style="max-width: 1360px; margin: 0 auto; padding: 16px 24px 96px">
+    <sc-if value="{{noEvents}}"><section role="status" style="padding:32px 24px;border-radius:24px;background:#FFFFFF;border:1px solid #E3E7F2"><h2 style="margin:0;font-size:22px;color:#32306F">Belum ada event yang dijadwalkan</h2><p style="margin:12px 0 0;line-height:1.7;color:#55577A">Informasi event akan ditampilkan setelah jadwal resmi tersedia.</p></section></sc-if>
     <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px">
       <sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
         <button type="button" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="{{f.style}}">{{f.label}}</button>
@@ -232,12 +233,7 @@ class Component extends DCLogic {
   renderVals() {
     const st = this.state;
     const S = { 'Dibuka': ['#DCFCE7', '#166534'], 'Segera Dibuka': ['#FEF3C7', '#92400E'] };
-    const defs = [
-      { id: 'v1', key: 'leap', org: 'IPB LEAP', title: 'Leadership Camp 2026', when: '14–16 Nov 2026 · 08.00–17.00 WIB', place: 'Bogor', mode: 'Offline', status: 'Dibuka', close: '2 Nov', reg: 'platform', bg: 'linear-gradient(150deg,#32306F,#3157A5)', ink: '#FFFFFF', accent: '#D4FF3A' },
-      { id: 'v2', key: 'cda', org: 'CDA IPB', title: 'Career Day: Agri-Industry', when: 'Kam, 5 Nov 2026 · 09.00–15.00 WIB', place: 'Kampus IPB Dramaga', mode: 'Offline', status: 'Dibuka', close: '3 Nov', reg: 'external', bg: '#D4FF3A', ink: '#0D0D1A', accent: '#3157A5' },
-      { id: 'v3', key: 'ha', org: 'HA IPB', title: 'Diaspora Talk VIII', when: 'Sen, 9 Nov 2026 · 19.30–21.00 WIB', place: 'Zoom', mode: 'Online', status: 'Segera Dibuka', close: '8 Nov', open1: '20 Okt', reg: 'external', bg: 'linear-gradient(160deg,#A3D6E6,#E3F3F8)', ink: '#0D0D1A', accent: '#32306F' },
-      { id: 'v4', key: 'cda', org: 'CDA IPB', title: 'Workshop CV & LinkedIn', when: 'Min, 1 Nov 2026 · 13.00–15.00 WIB', place: 'Gedung CDA IPB + Zoom', mode: 'Hybrid', status: 'Dibuka', close: '30 Okt', reg: 'platform', bg: '#0E0D2B', ink: '#FFFFFF', accent: '#2FA3C7' }
-    ];
+    const defs = [];
     const fd = [['semua', 'Semua'], ['leap', 'IPB LEAP'], ['ha', 'HA IPB'], ['cda', 'CDA IPB']];
     const filters = fd.map((f) => ({
       label: f[1], pressed: st.filter === f[0] ? 'true' : 'false',
@@ -253,7 +249,7 @@ class Component extends DCLogic {
     }));
     const sel = defs.find((e) => e.id === st.reg);
     return {
-      filters: filters, events: events,
+      filters: filters, events: events, noEvents: !events.length,
       regOpen: !!sel, regForm: !!sel && !st.regDone, regDone: st.regDone,
       selTitle: sel ? sel.title : '', selWhen: sel ? sel.when : '',
       closeReg: () => this.setState({ reg: null, regDone: false }),

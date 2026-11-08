@@ -70,6 +70,13 @@ a{color:#3157A5}a:hover{color:#32306F}
 .gtile{transition:transform .25s}.gtile:hover{transform:scale(1.03)}
 @media (max-width: 1000px){.gal{grid-template-columns:repeat(2,minmax(0,1fr)) !important;grid-auto-rows:120px !important}.gal>.gtile{grid-column:auto !important;grid-row:auto !important}}
 @keyframes ringFlow{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+ .leap-welcomes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 32px;max-width:1200px}
+ .leap-welcomes img{display:block;width:100%;height:100%;object-fit:cover}
+ .leap-welcomes .welcome-message{margin:12px 0 0;font-size:15px;line-height:1.65;font-style:italic;color:rgba(255,255,255,.88)}
+ .leap-welcomes .welcome-theme{margin:12px 0 0;color:#FFFFFF;font-size:17px;line-height:1.4}
+ .leap-welcomes .welcome-tagline{margin:6px 0 0;color:rgba(255,255,255,.88);font-size:14px;line-height:1.5}
+ @media(min-width:621px) and (max-width:900px){.leap-welcomes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+ @media(max-width:620px){.leap-welcomes{grid-template-columns:minmax(0,1fr);gap:36px}}
 .kpframe{animation:ringFlow 6s ease-in-out infinite;transition:transform .35s cubic-bezier(.2,.9,.3,1.3)}.kpframe:hover{transform:rotate(0deg) scale(1.03) !important}
 .bento{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:56px 56px}
 .nudge{transition:transform .25s}.nudge:hover{transform:translateY(-4px)}
@@ -196,20 +203,28 @@ body{margin:0}
         </div>
         
       </div>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px 32px">
+      <div class="leap-welcomes">
         <sc-for list="{{welcomes}}" as="w" hint-placeholder-count="3">
           <article class="rise {{w.d}}" style="display: flex; flex-direction: column; gap: 18px">
             <div class="kpframe" style="position: relative; aspect-ratio: 4 / 5; border-radius: 30px; padding: 3px; background: {{w.ring}}; background-size: 200% 200%; transform: rotate({{w.r}}deg)">
-              <div style="position: relative; width: 100%; height: 100%; border-radius: 27px; overflow: hidden; background: linear-gradient(160deg, rgba(255,255,255,.1), rgba(255,255,255,.03)); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: rgba(255,255,255,.55)">
-                <svg aria-hidden="true" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"></path></svg>
-                <span style="font-size: 12.5px; font-weight: 700">Foto belum ada</span>
+              <div style="width:100%;height:100%;border-radius:27px;overflow:hidden;background:#15143A">
+                <img src="{{w.photo}}" alt="{{w.name}}" loading="lazy" decoding="async" style="object-position:{{w.position}}">
               </div>
               <span style="position: absolute; left: 18px; bottom: -14px; padding: 7px 14px; border-radius: 999px; background: {{w.tagBg}}; color: {{w.tagInk}}; font-size: 11.5px; font-weight: 800; letter-spacing: .08em; box-shadow: 0 10px 24px -10px rgba(0,0,0,.6)">{{w.role}}</span>
             </div>
             <div style="padding-top: 8px">
-              <strong style="display: block; font-size: 21px; color: rgba(255,255,255,.45)">Nama belum diisi</strong>
-              <span style="font-size: 13.5px; color: rgba(255,255,255,.68)">{{w.org}}</span>
-              <p style="margin: 12px 0 0; font-size: 15px; line-height: 1.65; font-style: italic; color: rgba(255,255,255,.55)">"Kutipan sambutan belum tersedia."</p>
+              <strong style="display:block;font-size:21px;color:#FFFFFF">{{w.name}}</strong>
+              <span style="font-size:13.5px;color:rgba(255,255,255,.78)">{{w.org}}</span>
+              <sc-if value="{{w.message}}">
+                <sc-if value="{{w.theme}}">
+                  <h3 class="welcome-theme">{{w.theme}}</h3>
+                  <p class="welcome-tagline" lang="en">{{w.tagline}}</p>
+                </sc-if>
+                <p class="welcome-message">{{w.message}}</p>
+              </sc-if>
+              <sc-if value="{{w.directQuote}}">
+                <blockquote class="welcome-message">“{{w.directQuote}}”</blockquote>
+              </sc-if>
             </div>
           </article>
         </sc-for>
@@ -231,6 +246,7 @@ body{margin:0}
             <h3 style="margin: 0; font-size: 20px; font-weight: 800">Event terdekat</h3>
             <span style="font-size: 14px; font-weight: 800; cursor: default; color: #D4FF3A; text-decoration: none">Segera hadir</span>
           </div>
+          <sc-if value="{{noEvents}}"><div role="status" style="padding:26px;border-radius:26px;background:rgba(255,255,255,.07)"><strong style="font-size:20px">Belum ada event yang dijadwalkan</strong><p style="margin:10px 0 0;line-height:1.7;color:rgba(255,255,255,.8)">Informasi event akan ditampilkan setelah jadwal resmi tersedia.</p></div></sc-if>
           <sc-if value="{{hasNext}}" hint-placeholder-val="{{ true }}">
             <div style="position: relative; overflow: hidden; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 18px; padding: 26px; border-radius: 26px; background: linear-gradient(135deg,#32306F,#3157A5); color: #FFFFFF; text-decoration: none">
               <span aria-hidden="true" style="position: absolute; inset: 0; background: radial-gradient(320px 200px at 100% 0%, rgba(212,255,58,.28), transparent 70%)"></span>
@@ -284,7 +300,7 @@ body{margin:0}
               <span style="flex: none; padding: 5px 10px; border-radius: 999px; background: {{g.tagBg}}; color: {{g.tagInk}}; font-size: 12px; font-weight: 800">Lihat →</span>
             </a>
           </sc-for>
-          <span style="font-size: 12.5px; color: rgba(255,255,255,.55)">Foto dan profil segera diunggah.</span>
+          <a href="asmen.html" style="align-self:flex-start;color:#A3D6E6;font-size:13px;font-weight:700">Lihat foto Asmen →</a>
         </article>
 
         <sc-for list="{{teasers}}" as="t" hint-placeholder-count="3">
@@ -502,12 +518,7 @@ class Component extends DCLogic {
     const now = new Date();
     const today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
     const mons = ['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'];
-    const evs = [
-      { title: 'Workshop CV & LinkedIn', org: 'CDA IPB', date: '2026-11-01', time: '13.00–15.00 WIB', when: 'Min, 1 Nov 2026 · 13.00–15.00 WIB', place: 'Gedung CDA IPB + Zoom', mode: 'Hybrid', status: 'Dibuka', close: '30 Okt', bg: '#0E0D2B', ink: '#FFFFFF' },
-      { title: 'Career Day: Agri-Industry', org: 'CDA IPB', date: '2026-11-05', time: '09.00–15.00 WIB', when: 'Kam, 5 Nov 2026 · 09.00–15.00 WIB', place: 'Kampus IPB Dramaga', mode: 'Offline', status: 'Dibuka', close: '3 Nov', bg: '#D4FF3A', ink: '#0D0D1A' },
-      { title: 'Diaspora Talk VIII', org: 'HA IPB', date: '2026-11-09', time: '19.30–21.00 WIB', when: 'Sen, 9 Nov 2026 · 19.30–21.00 WIB', place: 'Zoom', mode: 'Online', status: 'Segera Dibuka', close: '8 Nov', bg: '#A3D6E6', ink: '#0D0D1A' },
-      { title: 'Leadership Camp 2026', org: 'IPB LEAP', date: '2026-11-14', time: '08.00–17.00 WIB', when: '14–16 Nov 2026 · 08.00–17.00 WIB', place: 'Bogor', mode: 'Offline', status: 'Dibuka', close: '2 Nov', bg: '#32306F', ink: '#FFFFFF' }
-    ].map((e) => {
+    const evs = [].map((e) => {
       const p = e.date.split('-').map(Number);
       const t = new Date(p[0], p[1] - 1, p[2]).getTime();
       const d = Math.round((t - today0) / DAY);
@@ -525,14 +536,14 @@ class Component extends DCLogic {
     return {
       stats: stats, statsInline: stats.filter((x) => x.where === 'in'), statsFloat: stats.filter((x) => x.where === 'float'), cards: cards, tiles: tiles,
       today: now.getDate() + ' ' + mons[now.getMonth()].charAt(0) + mons[now.getMonth()].slice(1).toLowerCase() + ' ' + now.getFullYear(),
-      hasNext: !!evs[0], next: next, upcoming: evs.slice(1), news: news,
+      noEvents: !evs.length, hasNext: !!evs[0], next: next, upcoming: evs.slice(1), news: news,
       paths: ['Entrepreneur', 'Akademisi & Peneliti', 'Professional & Birokrat', 'Politik', 'Sosial & Komunitas'],
       teasers: teasers, gallery: gallery,
       sparks: this.sparks,
       welcomes: [
-        { role: 'KETUA UMUM', org: 'Dewan Pengurus Pusat Himpunan Alumni IPB', ring: 'linear-gradient(135deg,#D4FF3A,#A3D6E6,#6E5AE6,#D4FF3A)', tagBg: '#D4FF3A', tagInk: '#0D0D1A', r: '-2', d: 'd1' },
-        { role: 'REKTOR', org: 'IPB University', ring: 'linear-gradient(135deg,#A3D6E6,#FFFFFF,#3157A5,#A3D6E6)', tagBg: '#FFFFFF', tagInk: '#32306F', r: '1.5', d: 'd2' },
-        { role: 'SEKRETARIS JENDERAL', org: 'Dewan Pengurus Pusat Himpunan Alumni IPB', ring: 'linear-gradient(135deg,#6E5AE6,#A3D6E6,#D4FF3A,#6E5AE6)', tagBg: '#A3D6E6', tagInk: '#0D0D1A', r: '-1', d: 'd3' }
+        {"role": "REKTOR", "name": "Dr. Alim Setiawan Slamet, S.TP., M.Si.", "org": "Rektor IPB University", "photo": "assets/photos/sambutan/alim-setiawan-slamet.webp", "position": "50% 28%", "ring": "linear-gradient(135deg,#A3D6E6,#FFFFFF,#3157A5,#A3D6E6)", "tagBg": "#FFFFFF", "tagInk": "#32306F", "r": "1.5", "d": "d1", "directQuote": "Keberhasilan seorang pemimpin bukan hanya tentang seberapa banyak orang yang dipimpinnya, tetapi seberapa banyak pemimpin baru yang berhasil ia lahirkan."},
+        {"role": "KETUA UMUM", "name": "H. Fauzi H. Amro, S.Pt., M.Si.", "org": "Ketua Umum DPP Himpunan Alumni IPB", "photo": "assets/photos/sambutan/fauzi-amro.webp", "position": "50% 30%", "ring": "linear-gradient(135deg,#D4FF3A,#A3D6E6,#6E5AE6,#D4FF3A)", "tagBg": "#D4FF3A", "tagInk": "#0D0D1A", "r": "-2", "d": "d2", "theme": "Sinergi, Tumbuh Bersama, dan Berdampak.", "tagline": "Leadership is about collective growth and lasting impact.", "message": "Kepemimpinan bukan tentang seberapa tinggi posisi yang kita duduki, tetapi seberapa besar organisasi yang kita bangun, seberapa banyak orang yang kita tumbuhkan, dan seberapa luas manfaat yang kita tinggalkan."},
+        {"role": "SEKJEN", "name": "Dr. Anggawira, M.M., M.H.", "org": "Sekretaris Jenderal DPP HA IPB", "photo": "assets/photos/sambutan/anggawira.webp", "position": "50% 32%", "directQuote": "Naik kelas bersama IPB bukan sekadar slogan, melainkan tekad kolektif untuk terus bertumbuh, memperluas dampak, dan menghadirkan kontribusi yang lebih tinggi.", "ring": "linear-gradient(135deg,#A3D6E6,#6E5AE6,#FFFFFF,#A3D6E6)", "tagBg": "#A3D6E6", "tagInk": "#32306F", "r": "1.5", "d": "d3"}
       ],
       people: [
         { role: 'Mentor', desc: 'Alumni IPB yang sudah lebih dulu sampai', href: 'mentor.html', faces: ['linear-gradient(135deg,#32306F,#3157A5)', 'linear-gradient(135deg,#3157A5,#A3D6E6)', 'linear-gradient(135deg,#0E0D2B,#32306F)', 'linear-gradient(135deg,#A3D6E6,#E3F3F8)'], tagBg: '#32306F', tagInk: '#FFFFFF', delay: '0' },
