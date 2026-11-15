@@ -126,7 +126,7 @@ export async function mount(){
  }
  function growOverviewPanel(){
   if(local||!managesBatch())return '';
-  return `<section class="mg-card" id="mg-grow-overview"><div class="mg-heading"><div><h2>Pengisian GROW Canvas</h2><p class="mg-sub">Siapa saja yang sudah dan belum mengisi GROW Canvas di cohort ini.</p></div><div class="mg-actions">${btn('Perbarui','growrefresh','secondary small')}${btn('Unduh semua GROW Canvas','growall','secondary small')}</div></div><div data-grow-overview aria-live="polite"><p class="mg-sub">Memuat data GROW Canvas…</p></div></section>`;
+  return `<section class="mg-card" id="mg-grow-overview"><div class="mg-heading"><div><h2>Pengisian GROW Canvas</h2><p class="mg-sub">Siapa saja yang sudah dan belum mengisi GROW Canvas di cohort ini.</p></div><div class="mg-actions">${btn('Perbarui','growrefresh','secondary small')}${btn('Unduh daftar nama','growlist','secondary small')}${btn('Unduh semua GROW Canvas','growall','secondary small')}</div></div><div data-grow-overview aria-live="polite"><p class="mg-sub">Memuat data GROW Canvas…</p></div></section>`;
  }
  async function refreshGrowOverview(fresh=false){
   const box=root.querySelector('[data-grow-overview]');if(!box)return;
@@ -142,6 +142,27 @@ export async function mount(){
    const list=(title,items,kind,tone)=>`<section><div class="mg-heading"><h3 style="margin:0">${title}</h3>${tag(items.length+' orang',tone)}</div>${items.length?`<ul class="mg-list" style="list-style:none;padding:0;margin-top:12px">${items.map(x=>person(x,kind)).join('')}</ul>`:`<p class="mg-sub">Tidak ada.</p>`}</section>`;
    box.innerHTML=`<div class="mg-stats" style="margin:20px 0">${[[r.filled.length,'Sudah mengisi',pct+'% dari '+total+' mentee aktif'],[r.empty.length,'Belum mengisi','Belum ada isian tersimpan'],[total,'Mentee aktif','Di cohort ini'],[pct+'%','Tingkat pengisian','Diperbarui '+stamp(r.at)]].map(([n,l,h])=>`<article class="mg-stat"><span>${l}</span><strong>${n}</strong><small>${h}</small></article>`).join('')}</div><div style="height:8px;border-radius:99px;background:#EFF2F9;overflow:hidden;margin-bottom:22px" role="img" aria-label="${pct}% sudah mengisi"><div style="height:100%;width:${pct}%;background:#32306F"></div></div><div class="mg-grid">${list('Sudah mengisi',r.filled,'filled','success')}${list('Belum mengisi',r.empty,'empty','pending')}</div>${r.failed.length?`<p class="mg-message error" style="margin-top:16px">Data ${r.failed.length} mentee belum dapat dimuat: ${esc(r.failed.map(e=>e.profile.display_name).join(', '))}. Klik Perbarui untuk mencoba lagi.</p>`:''}`;
   }catch(error){if(box.isConnected)box.innerHTML=`<p class="mg-message error">${esc(error.message||'Data GROW Canvas belum dapat dimuat.')}</p>`;}
+ }
+ async function downloadGrowList(button){
+  if(button.disabled)return;
+  const cohort=currentCohort();if(!cohort)return;
+  const mentees=people().filter(e=>e.role==='mentee'&&e.active);
+  if(!mentees.length){message('Belum ada mentee aktif di cohort ini.',true);return;}
+  const label=button.textContent;button.disabled=true;
+  try{
+   const r=await loadGrowDrafts(cohort,mentees,(done,total)=>{button.textContent='Memuat '+done+'/'+total+'…';});
+   const cell=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+   const row=(e,fill,draft)=>[fill,e.profile.display_name,e.profile.email,groupOf(e.user_id)?.name||'',e.field||'',e.pathway||'',draft?draft.status||'Draft':'',draft?.savedAt?stamp(draft.savedAt):''];
+   const rows=[['Status pengisian','Nama','Email','Kelompok','Track','Pathway','Status GROW','Terakhir disimpan'],
+    ...r.filled.map(({e,draft})=>row(e,'Sudah mengisi',draft)),
+    ...r.empty.map(({e})=>row(e,'Belum mengisi',null)),
+    ...r.failed.map(e=>row(e,'Gagal dimuat',null))];
+   const slug=String(cohort.name||'cohort').replace(/[^\p{L}\p{N}]+/gu,'-').replace(/^-|-$/g,'')||'cohort';
+   const url=URL.createObjectURL(new Blob(['﻿'+rows.map(x=>x.map(cell).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');
+   a.href=url;a.download='Daftar-Pengisian-GROW-'+slug+'-'+new Date().toISOString().slice(0,10)+'.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);
+   message('Daftar diunduh: '+r.filled.length+' sudah mengisi, '+r.empty.length+' belum mengisi'+(r.failed.length?', '+r.failed.length+' gagal dimuat':'')+'.',Boolean(r.failed.length));
+  }catch(error){message(error.message||'Daftar belum dapat diunduh. Coba lagi.',true);}
+  finally{if(button.isConnected){button.disabled=false;button.textContent=label;}refreshGrowOverview();}
  }
  async function downloadAllGrow(button){
   if(button.disabled)return;
@@ -242,7 +263,7 @@ export async function mount(){
   d.showModal();
  }
  function showActivation(url){const d=root.querySelector('#mg-dialog');d.innerHTML='<div class="mg-dialog-head"><h2>Tautan aktivasi pribadi</h2></div><div style="padding:24px"><p class="mg-sub">Bagikan hanya kepada pemilik akun. Berlaku 14 hari, sekali pakai. Belum ada email yang dikirim.</p>'+input('activation','Tautan aktivasi',url,'url','readonly')+btn('Tutup','close')+'</div>';d.showModal();}
- root.addEventListener('click',async event=>{const button=event.target.closest('[data-action],[data-tab]');if(!button)return;if(button.dataset.tab){tab=button.dataset.tab;roleFilter='';selected=null;updateURL();render();return;}const [action,id]=button.dataset.action.split(':');if(action==='import')importModal();if(action==='account')accountModal();if(action==='edit')accountModal(id);if(action==='cohort')cohortModal();if(action==='group')groupModal();if(action==='editgroup')groupModal(id);if(action==='archivegroup')archiveGroupModal(id);if(action==='close')root.querySelector('#mg-dialog').close();if(action==='detail'){selected=id;updateURL();render();root.focus();}if(action==='growall')downloadAllGrow(button);if(action==='growrefresh')refreshGrowOverview(true);if(action==='back'){selected=null;updateURL();render();}if(action==='reload'){growCache=null;try{if(!local)await store.reload(cohortId);render();}catch(e){message(e.message,true);}}if(action==='activate'&&!local){button.disabled=true;try{const a=await store.reissue(id,cohortId);showActivation(a.url);}catch(e){message(e.message,true);}finally{button.disabled=false;}}if(action==='attendance'){if(local){sessionStorage.setItem(ACTOR_KEY,id);sessionStorage.setItem('ipbleap.ui.role','mentee');}const u=new URL('kehadiran.html',location.href);u.searchParams.set('cohort',cohortId);u.searchParams.set('mentee',id);location.href=u.pathname+u.search;}if(action==='rehearse'&&local){sessionStorage.setItem(ACTOR_KEY,id);sessionStorage.setItem('ipbleap.ui.role','mentee');const u=new URL('mentoring.html',location.href);u.searchParams.set('cohort',cohortId);u.searchParams.set('mentee',id);location.href=u.pathname+u.search;}});
+ root.addEventListener('click',async event=>{const button=event.target.closest('[data-action],[data-tab]');if(!button)return;if(button.dataset.tab){tab=button.dataset.tab;roleFilter='';selected=null;updateURL();render();return;}const [action,id]=button.dataset.action.split(':');if(action==='import')importModal();if(action==='account')accountModal();if(action==='edit')accountModal(id);if(action==='cohort')cohortModal();if(action==='group')groupModal();if(action==='editgroup')groupModal(id);if(action==='archivegroup')archiveGroupModal(id);if(action==='close')root.querySelector('#mg-dialog').close();if(action==='detail'){selected=id;updateURL();render();root.focus();}if(action==='growall')downloadAllGrow(button);if(action==='growrefresh')refreshGrowOverview(true);if(action==='growlist')downloadGrowList(button);if(action==='back'){selected=null;updateURL();render();}if(action==='reload'){growCache=null;try{if(!local)await store.reload(cohortId);render();}catch(e){message(e.message,true);}}if(action==='activate'&&!local){button.disabled=true;try{const a=await store.reissue(id,cohortId);showActivation(a.url);}catch(e){message(e.message,true);}finally{button.disabled=false;}}if(action==='attendance'){if(local){sessionStorage.setItem(ACTOR_KEY,id);sessionStorage.setItem('ipbleap.ui.role','mentee');}const u=new URL('kehadiran.html',location.href);u.searchParams.set('cohort',cohortId);u.searchParams.set('mentee',id);location.href=u.pathname+u.search;}if(action==='rehearse'&&local){sessionStorage.setItem(ACTOR_KEY,id);sessionStorage.setItem('ipbleap.ui.role','mentee');const u=new URL('mentoring.html',location.href);u.searchParams.set('cohort',cohortId);u.searchParams.set('mentee',id);location.href=u.pathname+u.search;}});
  window.addEventListener('storage',e=>{if(e.key==='ipbleap.local.management.v1'){if(root.querySelector('#mg-dialog')?.open)message('Ada perubahan dari tab lain. Isian formulir tetap tersedia; muat versi terbaru sebelum menyimpan.',true);else render();}});
  try{render();}catch(e){root.innerHTML=empty('Data lokal belum dapat dibuka',esc(e.message));}
 }
