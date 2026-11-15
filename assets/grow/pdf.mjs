@@ -130,14 +130,19 @@ export function renderGrowPdf({jsPDF,regular,bold,logo},info){
  return new Uint8Array(pdf.output('arraybuffer'));
 }
 
+export const growPdfName=name=>'GROW-Canvas-'+(clean(name||'Mentee').replace(/[^\p{L}\p{N} _-]/gu,'').trim().replace(/\s+/g,'-').slice(0,70)||'Mentee')+'.pdf';
+
+export async function growPdfBytes(info){
+ return renderGrowPdf(await loadAssets(),info);
+}
+
 export async function downloadGrowPdf(info){
  const resources=await loadAssets();
  const bytes=renderGrowPdf(resources,info);
- const name=clean(info.name||'Mentee').replace(/[^\p{L}\p{N} _-]/gu,'').trim().replace(/\s+/g,'-').slice(0,70)||'Mentee';
  const url=URL.createObjectURL(new Blob([bytes],{type:'application/pdf'}));
  const link=document.createElement('a');
  link.href=url;
- link.download='GROW-Canvas-'+name+'.pdf';
+ link.download=growPdfName(info.name);
  document.body.append(link);
  link.click();
  link.remove();
