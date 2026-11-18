@@ -22,6 +22,21 @@ export async function mount(){
    const signedIn=await client.auth.signInWithPassword({email:identity.user.email,password});if(signedIn.error)throw signedIn.error;change.reset();await go();
   }catch(err){inform(errorText(err));}finally{busy=false;change.querySelector('button').disabled=false;}
  });
+ const forgot=document.querySelector('#leap-forgot-form');
+ forgot?.addEventListener('submit',async e=>{
+  e.preventDefault();if(!forgot.reportValidity())return;
+  const status=forgot.querySelector('[data-forgot-status]'),button=forgot.querySelector('button');
+  button.disabled=true;status.style.color='#3157A5';status.textContent='Mengirim permintaan…';
+  try{
+   const {MAILER_ENDPOINT}=await import('../management/mailer.mjs?v=20261118-forgot');
+   if(!MAILER_ENDPOINT)throw Error('Reset mandiri belum aktif. Hubungi pengurus IPB LEAP untuk tautan reset.');
+   const response=await fetch(MAILER_ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'forgot',email:String(new FormData(forgot).get('email')||'').trim()})});
+   const result=await response.json().catch(()=>null);
+   if(!result?.ok)throw Error(result?.error||'Permintaan belum terkirim. Coba lagi.');
+   status.textContent=result.message;
+  }catch(err){status.style.color='#943B26';status.textContent=err.message||'Permintaan belum terkirim. Coba lagi.';}
+  finally{button.disabled=false;}
+ });
  for(const form of [login,activation])form.addEventListener('submit',async e=>{
  e.preventDefault();if(busy||!form.reportValidity())return;const f=new FormData(form);busy=true;form.querySelector('button').disabled=true;inform('Memverifikasi akun…');
  try{let email=String(f.get('email')||'').trim();const password=String(f.get('password')||'');

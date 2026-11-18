@@ -73,13 +73,20 @@ a{color:#3157A5}a:hover{color:#32306F}
       <label>Password pribadi baru<input class="field" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
       <label>Ulangi password baru<input class="field" name="confirm" type="password" autocomplete="new-password" minlength="12" maxlength="128" required style="display:block;width:100%;box-sizing:border-box;padding:16px;border:1px solid #D5DAEA;border-radius:14px"></label>
       <button class="btn" style="padding:16px;border:0;border-radius:16px;background:linear-gradient(135deg,#32306F,#3157A5);color:white;font:inherit;font-weight:700;font-size:16px;cursor:pointer">Simpan password &amp; masuk</button></form>
-      <details style="font-size:13px;color:#55577A;margin-top:24px;line-height:1.7"><summary style="cursor:pointer;font-weight:700;color:#3157A5">Lupa kata sandi?</summary><ol style="margin:10px 0 0;padding-left:20px"><li>Hubungi pengurus/admin IPB LEAP dan sebutkan email akunmu.</li><li>Pengurus mengirim <strong>tautan reset pribadi</strong> (misalnya lewat WhatsApp). Tautan berlaku 14 hari dan sekali pakai.</li><li>Buka tautan itu, buat kata sandi baru, lalu masuk seperti biasa. Data dan isianmu tetap aman.</li></ol><p style="margin:8px 0 0;color:#6B6D8C">Halaman ini tidak mengirim email otomatis. Belum punya akses? Minta tautan aktivasi ke pengurus.</p></details>
+      <details id="leap-forgot" style="font-size:13px;color:#55577A;margin-top:24px;line-height:1.7"><summary style="cursor:pointer;font-weight:700;color:#3157A5">Lupa kata sandi?</summary>
+      <form id="leap-forgot-form" style="display:grid;gap:12px;margin-top:12px">
+      <p style="margin:0">Tulis email akunmu. Tautan untuk membuat kata sandi baru akan dikirim ke email itu.</p>
+      <label>Email akun<input class="field" name="email" type="email" autocomplete="username" required style="display:block;width:100%;box-sizing:border-box;padding:14px;border:1px solid #D5DAEA;border-radius:14px;margin-top:6px"></label>
+      <button class="btn" style="padding:14px;border:1px solid #3157A5;border-radius:14px;background:white;color:#32306F;font:inherit;font-weight:700;cursor:pointer">Kirim tautan reset</button>
+      <p data-forgot-status role="status" aria-live="polite" style="margin:0;color:#3157A5"></p>
+      </form>
+      <p style="margin:8px 0 0;color:#6B6D8C">Tidak menerima email? Periksa folder Spam atau hubungi pengurus IPB LEAP. Belum punya akses? Minta tautan aktivasi ke pengurus.</p></details>
     </div>
   </section>
 </div>
 </template>
 <script type="text/x-dc" data-dc="Main" data-props='{}'>
-class Component extends DCLogic {componentDidMount(){import(new URL('../assets/assessment/login.mjs?v=20261104-event',location.href).href).then(m=>m.mount()).catch(()=>{document.querySelector('#auth-message').textContent='Layanan login belum dapat dimuat. Muat ulang untuk mencoba kembali.';});}renderVals(){return {};}}
+class Component extends DCLogic {componentDidMount(){import(new URL('../assets/assessment/login.mjs?v=20261118-forgot',location.href).href).then(m=>m.mount()).catch(()=>{document.querySelector('#auth-message').textContent='Layanan login belum dapat dimuat. Muat ulang untuk mencoba kembali.';});}renderVals(){return {};}}
 </script>
 <script src="../assets/leap-runtime.js?v=20261103-portal2"></script>
 </body>

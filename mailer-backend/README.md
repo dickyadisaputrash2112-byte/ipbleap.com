@@ -17,5 +17,15 @@ Google Apps Script terpisah dari pendaftaran mentor. Saat Super Admin membuat ta
 4. **Deploy → New deployment** → tipe **Web app**. *Execute as:* **Me**. *Who has access:* **Anyone**. Klik **Deploy**.
 5. Salin **Web app URL** (berakhiran `/exec`) dan isi `MAILER_ENDPOINT` di `assets/management/mailer.mjs`.
 
+## Reset mandiri ("Lupa kata sandi?" di halaman login)
+
+Pengguna menulis emailnya sendiri. Script masuk sebagai akun khusus **Bot Reset** (Super Admin), menonaktifkan akun itu sementara, membuat tautan reset, lalu mengirimnya ke email akun tersebut. Setiap 10 menit script memastikan akun yang sudah membuat kata sandi baru aktif kembali di cohort-nya.
+
+1. Di Kelola Program buat akun **Bot Reset** (email bebas, mis. `bot-reset@ipbleap.com`), aktifkan sendiri lewat tautan aktivasinya dengan kata sandi panjang dan acak, lalu beri peran **Super Admin**.
+2. Di Apps Script: **Project Settings → Script Properties**, tambahkan `BOT_EMAIL` dan `BOT_PASSWORD` milik akun Bot Reset.
+3. Pilih fungsi `installTrigger` → **Run**. Log harus berbunyi "Bot Reset berhasil login…".
+
+Batasan: satu permintaan per email per 15 menit, 40 permintaan per jam. Balasan selalu sama, sehingga tidak membocorkan email mana yang terdaftar. Akun Super Admin tidak dapat di-reset dari sini. Lindungi akun Google pemilik script dengan verifikasi 2 langkah karena script ini memegang kata sandi Bot Reset.
+
 Selama `MAILER_ENDPOINT` kosong, Kelola Program tetap menampilkan tautan untuk dibagikan manual.
 Untuk perubahan kode berikutnya: **Deploy → Manage deployments → Edit → Version: New version** agar URL tetap sama.
